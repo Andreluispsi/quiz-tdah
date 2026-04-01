@@ -980,23 +980,24 @@ const QUESTIONS = [
   {
     id:'familia_parceiro', dim:'familia',
     category:'Sobre sua família', catClass:'familia',
-    text:'Sobre o pai ou parceiro(a): qual a realidade nua e crua?',
+    text:'Sobre a divisão de responsabilidades na criação do seu filho:',
     options:[
-      {text:'Não participa ou nega o diagnóstico. O peso todo cai nas minhas costas.',score:4,tags:['parceiro_ausente']},
+      {text:'Faço tudo sozinha — sou mãe solo ou o pai é totalmente ausente.',score:4,tags:['parceiro_ausente','mae_solo']},
+      {text:'O pai/parceiro(a) existe, mas não participa ou nega o diagnóstico.',score:4,tags:['parceiro_ausente']},
       {text:'Tenta ajudar mas não entende TDAH — acaba piorando a situação.',score:3,tags:['parceiro_desinformado']},
-      {text:'Ajuda quando eu peço, mas a liderança e a carga mental são 100% minhas.',score:2,tags:['parceiro_passivo']},
-      {text:'Somos parceiros nisso / Sou mãe solo e lido bem.',score:1,tags:['parceiro_ok']}
+      {text:'Ajuda quando peço, mas a carga mental é 100% minha.',score:2,tags:['parceiro_passivo']},
+      {text:'Tenho parceria real nisso — dividimos o peso de verdade.',score:1,tags:['parceiro_ok']}
     ]
   },
   {
     id:'familia_conflitos', dim:'familia',
     category:'Sobre sua família', catClass:'familia',
-    text:'O TDAH do seu filho está afetando o casamento ou a relação com outros filhos?',
+    text:'O TDAH do seu filho está afetando as relações dentro de casa?',
     options:[
-      {text:'Muito. A casa vive em tensão. Já pensei em separação por causa disso.',score:4,tags:['conflito_grave']},
-      {text:'Sim. Os irmãos reclamam de injustiça. O casal briga por causa do filho.',score:3,tags:['conflito_alto']},
+      {text:'Muito. A casa vive em tensão constante. Os conflitos estão fora de controle.',score:4,tags:['conflito_grave']},
+      {text:'Sim. Brigas frequentes — entre irmãos, entre adultos ou com todo mundo.',score:3,tags:['conflito_alto']},
       {text:'Tem momentos de tensão, mas no geral conseguimos manter o equilíbrio.',score:2,tags:['conflito_moderado']},
-      {text:'Pouco impacto. A família entende e se adapta.',score:1,tags:['conflito_baixo']}
+      {text:'Pouco impacto. Quem mora comigo entende e se adapta.',score:1,tags:['conflito_baixo']}
     ]
   },
   {
@@ -1155,8 +1156,8 @@ const PROFILES = {
   mae_solitaria: {
     name:'A Mãe na Batalha Solitária',
     test:(d) => d.mae>=10 && d.familia>=10,
-    alert:'<strong>Você está carregando o que deveria ser dividido por três pessoas.</strong> Sem parceiro ativo, sem família que entende, sem rede de apoio — a conta chega no seu corpo, na sua saúde mental e no seu casamento.',
-    insight:'O padrão é claro: <span class="highlight">você está sozinha demais nessa jornada</span>. O parceiro não participa (ou atrapalha), a família julga ao invés de ajudar, e você engole o choro pra não preocupar ninguém.<br><br>O resultado? Esgotamento silencioso. Você funciona por fora, mas por dentro está desmoronando. <strong>Nenhuma mãe foi projetada para fazer isso sozinha.</strong> Não é fraqueza pedir ajuda — é <span class="highlight">inteligência emocional</span>.',
+    alert:'<strong>Você está carregando o que deveria ser dividido.</strong> Seja por ser mãe solo, por não ter parceiro ativo ou por falta de rede de apoio — a conta inteira está caindo em você.',
+    insight:'O padrão é claro: <span class="highlight">você está sozinha demais nessa jornada</span>. Sem apoio real — seja de parceiro, família ou rede — você engole o choro pra não preocupar ninguém.<br><br>O resultado? Esgotamento silencioso. Você funciona por fora, mas por dentro está desmoronando. <strong>Nenhuma mãe foi projetada para fazer isso sozinha.</strong> Não é fraqueza pedir ajuda — é <span class="highlight">inteligência emocional</span>.',
     warnings:[
       {icon:'🏋️',text:'Sobrecarga solitária — você absorve 100% da carga mental do TDAH'},
       {icon:'🤐',text:'Isolamento emocional: parou de pedir ajuda porque cansou de ser julgada'},
@@ -1182,9 +1183,9 @@ const PROFILES = {
     name:'A Mãe do Lar em Guerra',
     test:(d) => d.familia>=12,
     alert:'<strong>O TDAH do seu filho virou uma granada dentro de casa.</strong> Os conflitos não são sobre birra ou desobediência — são sintomas de um sistema familiar desalinhado.',
-    insight:'O maior impacto está na <span class="highlight">dinâmica familiar</span>. O casamento sofre, os irmãos sentem injustiça, os avós julgam, e você está no centro tentando apaziguar todo mundo enquanto cuida de um filho que o mundo não entende.<br><br><strong>A verdade:</strong> o TDAH do seu filho apenas <span class="highlight">amplificou os conflitos que já existiam</span>. Sem alinhar a família, qualquer técnica que você aplicar com ele vai ser sabotada pelo ambiente. É como plantar uma semente em solo envenenado.',
+    insight:'O maior impacto está na <span class="highlight">dinâmica familiar</span>. As relações dentro de casa sofrem — seja com parceiro, irmãos ou família estendida. Você está no centro tentando apaziguar todo mundo enquanto cuida de um filho que o mundo não entende.<br><br><strong>A verdade:</strong> o TDAH do seu filho apenas <span class="highlight">amplificou os conflitos que já existiam</span>. Sem alinhar quem convive com ele, qualquer técnica que você aplicar vai ser sabotada pelo ambiente. É como plantar uma semente em solo envenenado.',
     warnings:[
-      {icon:'💥',text:'Conflitos conjugais agravados pelo TDAH — risco para o relacionamento'},
+      {icon:'💥',text:'Conflitos familiares agravados pelo TDAH — risco para todas as relações'},
       {icon:'⚖️',text:'Irmãos sentindo-se negligenciados ou tratados com injustiça'},
       {icon:'👴',text:'Julgamento da família estendida minando sua confiança'},
       {icon:'🏠',text:'Ambiente doméstico tenso prejudicando o desenvolvimento emocional de todos'}
@@ -1314,10 +1315,13 @@ function calcResult() {
     if(p.test(dims)){profile=k;break;}
   }
 
-  const scored = PRODUCTS.map(p=>{
-    let m=0; p.tags.forEach(t=>{if(allTags.includes(t))m++;});
-    return {...p, matchScore:m*p.weight, matchPct:Math.min(97,Math.round(62+(m/p.tags.length)*35))};
-  }).filter(p=>p.matchScore>0).sort((a,b)=>b.matchScore-a.matchScore).slice(0,3);
+  const isMaeSolo = allTags.includes('mae_solo');
+  const scored = PRODUCTS
+    .filter(p => !(isMaeSolo && p.id==='parceiro_participar'))
+    .map(p=>{
+      let m=0; p.tags.forEach(t=>{if(allTags.includes(t))m++;});
+      return {...p, matchScore:m*p.weight, matchPct:Math.min(97,Math.round(62+(m/p.tags.length)*35))};
+    }).filter(p=>p.matchScore>0).sort((a,b)=>b.matchScore-a.matchScore).slice(0,3);
 
   if(scored.length<3){
     const used=scored.map(p=>p.id);
