@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Quiz TDAH — Descubra o Raio-X da Sua Realidade como Mãe</title>
+  <meta name="description" content="Responda 12 perguntas e descubra exatamente o que você precisa para transformar a rotina do seu filho com TDAH.">
+
+  <!-- Open Graph / Meta Ads -->
+  <meta property="og:title" content="Quiz: Raio-X da Mãe de Filho com TDAH">
+  <meta property="og:description" content="12 perguntas que vão revelar a verdade sobre sua realidade — e o caminho para transformá-la.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="og-image.jpg">
+
+  <!-- Supabase Config -->
+  <script>
+    const SUPABASE_URL = 'https://txgbeuvkyomwqidgljup.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4Z2JldXZreW9td3FpZGdsanVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNTQwMzksImV4cCI6MjA4ODgzMDAzOX0.h-7H9UdlrYwLz1ivsI-6456L2hvw3ZmYU_zNP3Isbdo';
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Meta Pixel (substituir pelo seu ID) -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // fbq('init', 'SEU_PIXEL_ID');
+    // fbq('track', 'PageView');
+  </script>
+
+  <style>
+    :root {
+      --primary: #7C3AED;
+      --primary-dark: #6D28D9;
+      --primary-light: #EDE9FE;
+      --accent: #F59E0B;
+      --accent-dark: #D97706;
+      --bg: #FAFAF9;
+      --surface: #FFFFFF;
+      --text: #1C1917;
+      --text-secondary: #57534E;
+      --text-muted: #A8A29E;
+      --border: #E7E5E4;
+      --success: #10B981;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.12);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== LAYOUT ===== */
+    .quiz-container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrapper {
+      padding: 8px 0 16px;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .progress-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 3px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0%;
+    }
+
+    /* ===== SCREENS ===== */
+    .screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      animation: fadeIn 0.4s ease;
+    }
+    .screen.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ===== WELCOME SCREEN ===== */
+    .welcome {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      padding: 32px 0;
+    }
+    .welcome-icon {
+      font-size: 64px;
+      line-height: 1;
+    }
+    .welcome h1 {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .welcome h1 span { color: var(--primary); }
+    .welcome p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 360px;
+    }
+    .welcome-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 8px 14px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /* ===== QUESTION SCREEN ===== */
+    .question-screen {
+      padding: 16px 0;
+    }
+    .question-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 6px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .question-text {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--text);
+      text-align: left;
+      width: 100%;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .option:hover { border-color: var(--primary); background: var(--primary-light); }
+    .option:active { transform: scale(0.98); }
+    .option.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      font-weight: 600;
+    }
+    .option-letter {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--bg);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border: 2px solid var(--border);
+      transition: all 0.2s;
+    }
+    .option.selected .option-letter {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* ===== LEAD CAPTURE ===== */
+    .lead-screen {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      padding: 32px 0;
+    }
+    .lead-screen h2 {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .lead-screen h2 span { color: var(--primary); }
+    .lead-screen p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .lead-form {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .input-group {
+      position: relative;
+    }
+    .input-group .icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--text-muted);
+    }
+    .lead-form input {
+      width: 100%;
+      padding: 14px 14px 14px 44px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      background: var(--surface);
+      color: var(--text);
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .lead-form input:focus { border-color: var(--primary); }
+    .lead-form input::placeholder { color: var(--text-muted); }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(124, 58, 237, 0.4); }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+      text-decoration: none;
+    }
+    .btn-cta:hover { transform: translateY(-1px); }
+
+    /* ===== LOADING ===== */
+    .loading-screen {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      padding: 32px 0;
+    }
+    .loading-spinner {
+      width: 64px;
+      height: 64px;
+      border: 4px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+      width: 100%;
+      max-width: 320px;
+    }
+    .loading-step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    .loading-step.done { color: var(--success); }
+    .loading-step .check { font-size: 16px; }
+
+    /* ===== RESULT SCREEN ===== */
+    .result-screen {
+      padding: 16px 0 32px;
+      gap: 24px;
+    }
+    .result-header {
+      text-align: center;
+      padding: 24px;
+      background: linear-gradient(135deg, var(--primary), #4F46E5);
+      border-radius: var(--radius);
+      color: white;
+    }
+    .result-header h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .result-header .profile-name {
+      font-size: 16px;
+      opacity: 0.9;
+      font-weight: 500;
+    }
+
+    .raio-x-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+    .raio-x-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dimension-score {
+      margin-bottom: 16px;
+    }
+    .dimension-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .dimension-level {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-weight: 700;
+    }
+    .level-critical { background: #FEE2E2; color: #DC2626; }
+    .level-high { background: #FEF3C7; color: #D97706; }
+    .level-moderate { background: #DBEAFE; color: #2563EB; }
+    .level-low { background: #D1FAE5; color: #059669; }
+    .score-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .score-fill.critical { background: linear-gradient(90deg, #EF4444, #DC2626); }
+    .score-fill.high { background: linear-gradient(90deg, #F59E0B, #D97706); }
+    .score-fill.moderate { background: linear-gradient(90deg, #3B82F6, #2563EB); }
+    .score-fill.low { background: linear-gradient(90deg, #10B981, #059669); }
+
+    .insight-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+    .insight-text strong { color: var(--text); }
+
+    /* Product recommendations */
+    .products-section h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .products-subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .product-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      border: 2px solid var(--border);
+      transition: border-color 0.2s;
+    }
+    .product-card:first-of-type {
+      border-color: var(--primary);
+      position: relative;
+    }
+    .product-badge {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .product-rank {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .rank-number {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .product-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+    }
+    .product-card h4 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .product-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .product-match {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--success);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    /* Footer CTA */
+    .result-footer {
+      text-align: center;
+      padding: 24px;
+      background: var(--primary-light);
+      border-radius: var(--radius);
+    }
+    .result-footer p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    /* ===== PRIVACY ===== */
+    .privacy-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 8px;
+    }
+    .privacy-note a { color: var(--text-secondary); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 380px) {
+      .welcome h1 { font-size: 22px; }
+      .question-text { font-size: 18px; }
+      .option { padding: 14px 14px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+
+  <!-- Progress Bar -->
+  <div class="progress-wrapper" id="progressWrapper" style="display:none">
+    <div class="progress-info">
+      <span id="progressText">Pergunta 1 de 12</span>
+      <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Welcome -->
+  <div class="screen welcome active" id="screenWelcome">
+    <div class="welcome-icon">🧩</div>
+    <h1>Raio-X da Mãe de<br>Filho com <span>TDAH</span></h1>
+    <p>12 perguntas honestas que vão revelar o que ninguém te conta sobre a sua realidade — e o caminho exato para transformá-la.</p>
+    <div class="welcome-badges">
+      <div class="badge">⏱️ 3 minutos</div>
+      <div class="badge">🔒 100% sigiloso</div>
+      <div class="badge">🎯 Resultado personalizado</div>
+    </div>
+    <button class="btn-primary" onclick="startQuiz()">
+      Quero Meu Raio-X →
+    </button>
+    <p class="privacy-note">Mais de 2.300 mães já fizeram · Seus dados estão seguros</p>
+  </div>
+
+  <!-- SCREEN: Questions (rendered by JS) -->
+  <div class="screen question-screen" id="screenQuestion">
+    <div id="questionCategory" class="question-category"></div>
+    <div id="questionText" class="question-text"></div>
+    <div id="questionOptions" class="options"></div>
+  </div>
+
+  <!-- SCREEN: Lead Capture -->
+  <div class="screen lead-screen" id="screenLead">
+    <div style="font-size:48px">🔍</div>
+    <h2>Seu Raio-X está <span>pronto!</span></h2>
+    <p>Preencha abaixo para receber seu resultado personalizado e um plano de ação exclusivo no seu email.</p>
+    <div class="lead-form" id="leadForm">
+      <div class="input-group">
+        <span class="icon">👤</span>
+        <input type="text" id="inputName" placeholder="Seu primeiro nome" required autocomplete="given-name">
+      </div>
+      <div class="input-group">
+        <span class="icon">📧</span>
+        <input type="email" id="inputEmail" placeholder="Seu melhor email" required autocomplete="email">
+      </div>
+      <div class="input-group">
+        <span class="icon">📱</span>
+        <input type="tel" id="inputPhone" placeholder="WhatsApp (opcional)" autocomplete="tel">
+      </div>
+      <button class="btn-primary" onclick="submitLead()" id="btnSubmitLead">
+        Ver Meu Resultado →
+      </button>
+      <p class="privacy-note">🔒 Seus dados estão protegidos e não serão compartilhados</p>
+    </div>
+  </div>
+
+  <!-- SCREEN: Loading -->
+  <div class="screen loading-screen" id="screenLoading">
+    <div class="loading-spinner"></div>
+    <h2 style="font-size:20px;font-weight:700">Analisando suas respostas...</h2>
+    <div class="loading-steps">
+      <div class="loading-step" id="loadStep1"><span class="check">⏳</span> Mapeando a dimensão do filho</div>
+      <div class="loading-step" id="loadStep2"><span class="check">⏳</span> Avaliando a dimensão emocional da mãe</div>
+      <div class="loading-step" id="loadStep3"><span class="check">⏳</span> Analisando a dinâmica familiar</div>
+      <div class="loading-step" id="loadStep4"><span class="check">⏳</span> Gerando seu Raio-X personalizado</div>
+    </div>
+  </div>
+
+  <!-- SCREEN: Result -->
+  <div class="screen result-screen" id="screenResult">
+    <div class="result-header">
+      <div style="font-size:36px;margin-bottom:8px">📊</div>
+      <h2>Seu Raio-X, <span id="resultName">Mãe</span></h2>
+      <div class="profile-name" id="resultProfile"></div>
+    </div>
+
+    <div class="raio-x-card">
+      <h3>🎯 Mapa de Intensidade</h3>
+      <div id="dimensionScores"></div>
+      <div class="insight-text" id="insightText"></div>
+    </div>
+
+    <div class="products-section">
+      <h3>🛤️ Seu Plano de Ação Personalizado</h3>
+      <p class="products-subtitle">Baseado no seu raio-x, estes são os passos na ordem certa:</p>
+      <div id="productCards"></div>
+    </div>
+
+    <div class="result-footer">
+      <button class="btn-primary" onclick="shareResult()">📤 Compartilhar com uma amiga que precisa</button>
+      <p>Você não está sozinha. Milhares de mães estão nessa jornada.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================================================================
+// QUIZ DATA
+// ===================================================================
+
+const QUESTIONS = [
+  // === DIMENSÃO 1: FILHO (4 perguntas) ===
+  {
+    id: 'filho_rotina',
+    category: '🧒 Sobre seu filho',
+    text: 'Como é a rotina do seu filho hoje em relação a tarefas do dia a dia (escola, higiene, alimentação)?',
+    options: [
+      { text: 'Ele não consegue fazer quase nada sozinho, preciso estar em cima o tempo todo', score: 4, tags: ['rotina_critica'] },
+      { text: 'Faz algumas coisas, mas esquece a maioria e eu preciso repetir várias vezes', score: 3, tags: ['rotina_fragil'] },
+      { text: 'Com lembretes ele até funciona, mas qualquer mudança desorganiza tudo', score: 2, tags: ['rotina_instavel'] },
+      { text: 'Já temos uma rotina razoável, mas quero melhorar', score: 1, tags: ['rotina_ok'] }
+    ]
+  },
+  {
+    id: 'filho_escola',
+    category: '🧒 Sobre seu filho',
+    text: 'Como está a situação escolar do seu filho?',
+    options: [
+      { text: 'Recebo reclamações toda semana, já pensei em trocar de escola', score: 4, tags: ['escola_crise'] },
+      { text: 'Tem dificuldade de concentração e notas baixas, a escola cobra muito', score: 3, tags: ['escola_dificuldade'] },
+      { text: 'A escola entende, mas sinto que ele poderia render muito mais', score: 2, tags: ['escola_suporte'] },
+      { text: 'A escola tá ok, minha preocupação é mais em casa', score: 1, tags: ['escola_ok'] }
+    ]
+  },
+  {
+    id: 'filho_emocional',
+    category: '🧒 Sobre seu filho',
+    text: 'Como seu filho lida com frustrações e emoções no dia a dia?',
+    options: [
+      { text: 'Tem crises intensas, gritos, choro — não sei mais o que fazer', score: 4, tags: ['emocional_explosivo'] },
+      { text: 'Se irrita fácil, qualquer "não" vira uma batalha', score: 3, tags: ['emocional_reativo'] },
+      { text: 'Fica frustrado mas consegue se acalmar com ajuda', score: 2, tags: ['emocional_moderado'] },
+      { text: 'Lida razoavelmente bem, mas às vezes me preocupa', score: 1, tags: ['emocional_estavel'] }
+    ]
+  },
+  {
+    id: 'filho_medicacao',
+    category: '🧒 Sobre seu filho',
+    text: 'Qual sua maior dúvida ou angústia sobre o tratamento/medicação?',
+    options: [
+      { text: 'Tenho medo da medicação, não sei se devo medicar', score: 4, tags: ['medicacao_medo'] },
+      { text: 'Ele toma medicação mas sinto que não é suficiente, preciso de mais estratégias', score: 3, tags: ['medicacao_complemento'] },
+      { text: 'Estou satisfeita com o tratamento mas quero entender melhor o TDAH', score: 2, tags: ['medicacao_ok'] },
+      { text: 'Ainda estou no processo de diagnóstico, me sinto perdida', score: 3, tags: ['diagnostico_processo'] }
+    ]
+  },
+
+  // === DIMENSÃO 2: MÃE (4 perguntas) ===
+  {
+    id: 'mae_culpa',
+    category: '💜 Sobre você, mãe',
+    text: 'Com que frequência você se sente culpada por gritar, perder a paciência ou achar que está falhando como mãe?',
+    options: [
+      { text: 'Todo dia. A culpa é minha companheira constante', score: 4, tags: ['culpa_extrema'] },
+      { text: 'Quase todo dia. Sei que não deveria, mas não consigo evitar', score: 3, tags: ['culpa_alta'] },
+      { text: 'Às vezes, principalmente depois de um dia difícil', score: 2, tags: ['culpa_moderada'] },
+      { text: 'Raramente. Sei que faço o meu melhor', score: 1, tags: ['culpa_baixa'] }
+    ]
+  },
+  {
+    id: 'mae_esgotamento',
+    category: '💜 Sobre você, mãe',
+    text: 'Seja honesta: como está seu nível de esgotamento agora?',
+    options: [
+      { text: 'Estou no limite. Acordo cansada e durmo exausta. Não aguento mais', score: 4, tags: ['burnout_extremo'] },
+      { text: 'Muito esgotada. Funciono no automático a maior parte do tempo', score: 3, tags: ['burnout_alto'] },
+      { text: 'Cansada, mas ainda consigo ter alguns momentos bons', score: 2, tags: ['burnout_moderado'] },
+      { text: 'Estou relativamente bem, busco informação para me preparar melhor', score: 1, tags: ['burnout_baixo'] }
+    ]
+  },
+  {
+    id: 'mae_conhecimento',
+    category: '💜 Sobre você, mãe',
+    text: 'Quanto você sente que entende de verdade sobre TDAH e como lidar no dia a dia?',
+    options: [
+      { text: 'Quase nada. Tudo que sei é do Google e me confunde mais', score: 4, tags: ['conhecimento_zero'] },
+      { text: 'Sei o básico, mas na prática não consigo aplicar', score: 3, tags: ['conhecimento_teorico'] },
+      { text: 'Já estudei bastante, mas sinto que falta um método organizado', score: 2, tags: ['conhecimento_disperso'] },
+      { text: 'Me considero bem informada, quero aprofundar em temas específicos', score: 1, tags: ['conhecimento_bom'] }
+    ]
+  },
+  {
+    id: 'mae_solidao',
+    category: '💜 Sobre você, mãe',
+    text: 'Você se sente sozinha nessa jornada com o TDAH do seu filho?',
+    options: [
+      { text: 'Completamente sozinha. Ninguém entende, ninguém ajuda', score: 4, tags: ['solidao_extrema'] },
+      { text: 'Tenho pouco apoio. As pessoas julgam mais do que ajudam', score: 3, tags: ['solidao_alta'] },
+      { text: 'Tenho algum apoio, mas gostaria de falar com quem vive a mesma coisa', score: 2, tags: ['solidao_moderada'] },
+      { text: 'Tenho boa rede de apoio (família, profissionais, comunidade)', score: 1, tags: ['solidao_baixa'] }
+    ]
+  },
+
+  // === DIMENSÃO 3: FAMÍLIA (4 perguntas) ===
+  {
+    id: 'familia_parceiro',
+    category: '👨‍👩‍👧 Sobre sua família',
+    text: 'Como o pai/parceiro(a) participa no manejo do TDAH?',
+    options: [
+      { text: 'Não participa ou nega o diagnóstico. Sobra tudo pra mim', score: 4, tags: ['parceiro_ausente'] },
+      { text: 'Tenta ajudar mas não entende e acaba atrapalhando', score: 3, tags: ['parceiro_desinformado'] },
+      { text: 'Participa quando eu peço, mas a liderança é toda minha', score: 2, tags: ['parceiro_passivo'] },
+      { text: 'Somos parceiros nisso / Sou mãe solo e lido bem', score: 1, tags: ['parceiro_ok'] }
+    ]
+  },
+  {
+    id: 'familia_conflitos',
+    category: '👨‍👩‍👧 Sobre sua família',
+    text: 'O TDAH do seu filho gera conflitos na família?',
+    options: [
+      { text: 'Sim, muitos. A casa vive em tensão, todo mundo estressado', score: 4, tags: ['conflito_grave'] },
+      { text: 'Bastante. Os irmãos reclamam, o casal briga por causa das questões do filho', score: 3, tags: ['conflito_alto'] },
+      { text: 'Alguns momentos de tensão, mas no geral a família lida', score: 2, tags: ['conflito_moderado'] },
+      { text: 'Pouco. A família entende e se adapta', score: 1, tags: ['conflito_baixo'] }
+    ]
+  },
+  {
+    id: 'familia_rede',
+    category: '👨‍👩‍👧 Sobre sua família',
+    text: 'Como é a relação da família estendida (avós, tios) com a situação?',
+    options: [
+      { text: '"Na minha época não tinha isso, é falta de limite" — só julgamento', score: 4, tags: ['rede_julgamento'] },
+      { text: 'Não entendem, mas pelo menos não atrapalham', score: 3, tags: ['rede_neutra'] },
+      { text: 'Alguns apoiam, outros nem tanto', score: 2, tags: ['rede_mista'] },
+      { text: 'A família toda entende e apoia', score: 1, tags: ['rede_apoio'] }
+    ]
+  },
+  {
+    id: 'familia_financeiro',
+    category: '👨‍👩‍👧 Sobre sua família',
+    text: 'Como está a questão financeira em relação ao tratamento e acompanhamento?',
+    options: [
+      { text: 'Não consigo pagar os profissionais que ele precisa', score: 4, tags: ['financeiro_critico'] },
+      { text: 'Pago o básico mas aperto em tudo, não sobra pra nada', score: 3, tags: ['financeiro_apertado'] },
+      { text: 'Dá pra manter o tratamento, mas preciso ser estratégica', score: 2, tags: ['financeiro_ok'] },
+      { text: 'O financeiro não é minha maior preocupação nesse tema', score: 1, tags: ['financeiro_tranquilo'] }
+    ]
+  }
+];
+
+// ===================================================================
+// PRODUCTS DATABASE
+// Substitua os links pelos seus links reais da Hotmart
+// ===================================================================
+
+const PRODUCTS = [
+  {
+    id: 'rotina_sem_caos',
+    name: 'Rotina TDAH Sem Caos',
+    description: 'O método passo a passo para criar uma rotina funcional que seu filho consegue seguir — desenvolvido por quem viveu o TDAH na pele.',
+    link: 'https://rotinatdahsemcaos.online/',
+    matchTags: ['rotina_critica', 'rotina_fragil', 'rotina_instavel', 'escola_crise', 'escola_dificuldade', 'conhecimento_zero', 'conhecimento_teorico'],
+    dimension: 'filho',
+    weight: 12
+  },
+  {
+    id: 'kit_emergencial',
+    name: 'Kit Emergencial Para Mãe Atípica Sobrecarregada',
+    description: 'Resgate imediato do equilíbrio com o método R.I.T.M.O. — para mães que estão no limite e precisam de fôlego agora.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/kit-emergencial-para-mae-atipica-sobrecarregada-resgate-imediato-do-equilibrio-e-da-forca-interior/C101654030B',
+    matchTags: ['culpa_extrema', 'culpa_alta', 'burnout_extremo', 'burnout_alto', 'solidao_extrema', 'solidao_alta'],
+    dimension: 'mae',
+    weight: 11
+  },
+  {
+    id: 'meu_filho_tdah',
+    name: 'Meu Filho Tem TDAH! E Agora?!',
+    description: 'O porto seguro para mães que acabaram de receber o diagnóstico — transforme incerteza em clareza e medo em ação prática.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/meu-filho-tem-tdah-e-agora-um-caminho-de-compreensao-acolhimento-acao-para-maes-que-querem-transformar-o-diagnostico-em-esperanca/C101654175J',
+    matchTags: ['medicacao_medo', 'diagnostico_processo', 'conhecimento_zero', 'conhecimento_teorico', 'escola_crise', 'escola_dificuldade'],
+    dimension: 'filho',
+    weight: 10
+  },
+  {
+    id: 'parceiro_participar',
+    name: 'Como Fazer Seu Parceiro Participar de Verdade',
+    description: 'Transforme o silêncio e a resistência do parceiro em diálogo, cooperação e apoio real no tratamento.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/como-fazer-seu-parceiro-participar-de-verdade-no-tratamento-do-seu-filho-neurodivergente/V101616698U',
+    matchTags: ['parceiro_ausente', 'parceiro_desinformado', 'parceiro_passivo', 'conflito_grave', 'conflito_alto'],
+    dimension: 'familia',
+    weight: 10
+  },
+  {
+    id: 'familia_transformacao',
+    name: 'Família em Transformação — Pack Completo (8 eBooks)',
+    description: 'O pack definitivo com 8 eBooks que cobrem comunicação, limites, ansiedade, parceria, tarefas e muito mais.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/familia-em-transformacao-o-pack-completo-para-pais-que-querem-educar-com-amor-limites-e-equilibrio/V101617315F',
+    matchTags: ['rotina_critica', 'rotina_fragil', 'culpa_extrema', 'culpa_alta', 'burnout_extremo', 'burnout_alto', 'parceiro_ausente', 'parceiro_desinformado', 'conflito_grave', 'conflito_alto', 'rede_julgamento', 'solidao_extrema', 'solidao_alta'],
+    dimension: 'familia',
+    weight: 9
+  },
+  {
+    id: 'comunicacao_familiar',
+    name: 'A Arte da Comunicação Familiar',
+    description: 'Transforme críticas e gritos em diálogo que aproxima — menos brigas, mais respeito e uma rotina leve.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/a-arte-da-comunicacao-familiar/F101616239A',
+    matchTags: ['conflito_grave', 'conflito_alto', 'conflito_moderado', 'emocional_explosivo', 'emocional_reativo', 'parceiro_desinformado'],
+    dimension: 'familia',
+    weight: 8
+  },
+  {
+    id: 'estabelecer_limites',
+    name: 'Como Ajudar Crianças a Estabelecer Limites',
+    description: 'Firmeza com afeto — como impor regras claras que seu filho respeita, sem gritos e sem culpa.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/como-ajudar-criancas-a-estabelecer-limites-guia-pratico-para-pais-e-educadores/Y101616449U',
+    matchTags: ['emocional_explosivo', 'emocional_reativo', 'rotina_critica', 'rotina_fragil', 'escola_crise'],
+    dimension: 'filho',
+    weight: 8
+  },
+  {
+    id: 'superar_ansiedade',
+    name: 'Como Superar a Ansiedade',
+    description: 'Técnicas de respiração, mindfulness e mudanças simples para você sair do piloto automático e reconquistar a calma.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/hagsxd-como-superar-a-ansiedade-lx32q/R101616873F',
+    matchTags: ['burnout_extremo', 'burnout_alto', 'burnout_moderado', 'culpa_extrema', 'culpa_alta', 'solidao_extrema'],
+    dimension: 'mae',
+    weight: 8
+  },
+  {
+    id: 'detox_digital',
+    name: 'Desintoxique Seu Filho da Dependência Digital',
+    description: 'O plano de Detox Digital em 21 dias — resgate o sono, a concentração e a criatividade do seu filho.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/desintoxique-seu-filho-da-dependencia-digital/L101654222B',
+    matchTags: ['rotina_critica', 'rotina_fragil', 'rotina_instavel', 'escola_crise', 'escola_dificuldade', 'emocional_explosivo'],
+    dimension: 'filho',
+    weight: 7
+  },
+  {
+    id: 'conexao_leitura',
+    name: 'Conexão Letras e Mentes — TDAH e Amor pela Leitura',
+    description: 'Transforme o desafio do TDAH em paixão pela leitura com estratégias práticas e recursos interativos.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/conexao-letras-e-mentes-transformando-o-desafio-do-tdah-em-amor-pela-leitura/J93818562O',
+    matchTags: ['escola_crise', 'escola_dificuldade', 'escola_suporte', 'conhecimento_disperso'],
+    dimension: 'filho',
+    weight: 7
+  },
+  {
+    id: 'tarefas_domesticas',
+    name: 'Guia Completo: Envolver a Família nas Tarefas Domésticas',
+    description: 'Transforme a sobrecarga solitária em colaboração — 8 passos práticos para dividir e conquistar.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/guia-completo-de-como-envolver-a-familia-nas-tarefas-domesticas/P101616927L',
+    matchTags: ['parceiro_ausente', 'parceiro_passivo', 'burnout_extremo', 'burnout_alto', 'conflito_alto'],
+    dimension: 'familia',
+    weight: 6
+  },
+  {
+    id: 'historias_conectam',
+    name: 'Histórias que Conectam',
+    description: 'Fortaleça o vínculo com seu filho criando histórias juntos — momentos que viram memórias eternas.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/historias-que-conectam-como-criar-uma-historia-compartilhada-com-seu-filho/V101616784N',
+    matchTags: ['emocional_moderado', 'emocional_estavel', 'solidao_moderada', 'rotina_ok', 'escola_suporte'],
+    dimension: 'filho',
+    weight: 5
+  },
+  {
+    id: 'sementes_virtude',
+    name: 'Sementes de Virtude — Caráter Forte e Compassivo',
+    description: 'Forme filhos com valores profundos — empatia, coragem e responsabilidade através de atitudes simples.',
+    link: 'https://hotmart.com/pt-br/marketplace/produtos/sementes-de-virtude-como-cultivar-um-carater-forte-e-compassivo-em-seu-filho/R101616985Q',
+    matchTags: ['emocional_moderado', 'emocional_estavel', 'rotina_ok', 'escola_ok', 'conhecimento_bom'],
+    dimension: 'filho',
+    weight: 5
+  }
+];
+
+// ===================================================================
+// PROFILES
+// ===================================================================
+
+const PROFILES = {
+  'guerreira_exausta': {
+    name: 'A Guerreira Exausta',
+    minScores: { filho: 10, mae: 10, familia: 0 },
+    headline: 'Você luta todos os dias pelo seu filho — mas está se destruindo no processo.',
+    insight: 'Seu raio-x mostra que você está operando no limite em <strong>todas as frentes</strong>. O filho precisa de estrutura, você precisa de descanso, e a família precisa de alinhamento. <strong>A verdade nua e crua:</strong> se você não cuidar de si mesma primeiro, não vai conseguir cuidar dele. Não é egoísmo — é sobrevivência. O burnout materno é real e já está batendo na sua porta.'
+  },
+  'mae_solo_batalha': {
+    name: 'A Mãe na Batalha Solitária',
+    minScores: { filho: 0, mae: 10, familia: 10 },
+    headline: 'Você carrega o mundo nas costas — sozinha.',
+    insight: 'Seu raio-x revela um padrão claro: <strong>você está sozinha demais nessa jornada</strong>. Sem parceiro ativo, sem família que entende, sem rede de apoio. O resultado? Esgotamento, culpa e a sensação de que nunca é suficiente. <strong>A realidade:</strong> nenhuma mãe foi feita para fazer isso sozinha. Você precisa de um sistema de apoio — e ele existe.'
+  },
+  'perdida_informacao': {
+    name: 'A Mãe em Busca de Respostas',
+    minScores: { filho: 8, mae: 8, familia: 0 },
+    headline: 'Você sente que está no escuro — fazendo o possível sem saber se está certo.',
+    insight: 'Seu raio-x mostra que sua maior dor é a <strong>falta de um norte claro</strong>. Você busca informação, tenta aplicar, mas nada parece funcionar de forma consistente. <strong>O ponto-chave:</strong> não é que você está fazendo errado. É que está tentando montar um quebra-cabeça sem a imagem da caixa. Você precisa de um método, não de mais dicas soltas do Instagram.'
+  },
+  'casa_campo_batalha': {
+    name: 'A Mãe do Lar em Guerra',
+    minScores: { filho: 0, mae: 0, familia: 10 },
+    headline: 'O TDAH não é só do seu filho — está afetando toda a família.',
+    insight: 'Seu raio-x aponta que o maior impacto está na <strong>dinâmica familiar</strong>. Conflitos com o parceiro, tensão com outros filhos, julgamento da família estendida. <strong>A verdade:</strong> o TDAH do seu filho amplifica todos os conflitos que já existiam. Sem alinhar a família, qualquer estratégia que você aplicar com ele vai ser sabotada pelo ambiente.'
+  },
+  'filho_desregulado': {
+    name: 'A Mãe do Vulcão',
+    minScores: { filho: 12, mae: 0, familia: 0 },
+    headline: 'Seu filho está desregulado — e você está pagando o preço.',
+    insight: 'Seu raio-x mostra que a maior urgência está no <strong>manejo direto do seu filho</strong>. Explosões emocionais, rotina caótica, escola em crise. <strong>A realidade:</strong> sem estratégias práticas e específicas para TDAH, cada dia é uma roleta russa emocional. A boa notícia: com o método certo, a transformação pode ser mais rápida do que você imagina.'
+  },
+  'equilibrista': {
+    name: 'A Equilibrista',
+    minScores: { filho: 6, mae: 6, familia: 6 },
+    headline: 'Você segura as pontas — mas está tudo por um fio.',
+    insight: 'Seu raio-x mostra desafios <strong>moderados em todas as dimensões</strong>. Não está em crise total, mas também não está no controle. Cada área puxa um pouquinho e o resultado é um cansaço crônico de quem faz muito mas sente que nada avança. <strong>O ponto:</strong> você está mais perto de virar o jogo do que imagina — falta organizar suas prioridades na ordem certa.'
+  },
+  'consciente_acao': {
+    name: 'A Mãe Consciente em Ação',
+    minScores: { filho: 0, mae: 0, familia: 0 },
+    headline: 'Você está no caminho certo — agora é hora de acelerar.',
+    insight: 'Seu raio-x mostra que você já tem <strong>boa consciência do TDAH</strong> e vem lidando bem. Mas sabe que pode mais. <strong>Sua oportunidade:</strong> ao invés de resolver problemas, você pode otimizar o que já funciona. Os próximos passos são sobre aprofundamento e refinamento — ir do "sobreviver" para o "prosperar".'
+  }
+};
+
+// ===================================================================
+// QUIZ ENGINE
+// ===================================================================
+
+let currentQuestion = 0;
+let answers = [];
+
+function startQuiz() {
+  document.getElementById('screenWelcome').classList.remove('active');
+  document.getElementById('screenQuestion').classList.add('active');
+  document.getElementById('progressWrapper').style.display = 'block';
+  renderQuestion(0);
+  trackEvent('QuizStarted');
+}
+
+function renderQuestion(index) {
+  const q = QUESTIONS[index];
+  const container = document.getElementById('screenQuestion');
+  container.style.animation = 'none';
+  container.offsetHeight; // trigger reflow
+  container.style.animation = 'slideIn 0.3s ease';
+
+  document.getElementById('questionCategory').textContent = q.category;
+  document.getElementById('questionText').textContent = q.text;
+
+  const optionsHtml = q.options.map((opt, i) => {
+    const letter = String.fromCharCode(65 + i);
+    return `<button class="option" onclick="selectOption(${index}, ${i})">
+      <span class="option-letter">${letter}</span>
+      <span>${opt.text}</span>
+    </button>`;
+  }).join('');
+
+  document.getElementById('questionOptions').innerHTML = optionsHtml;
+  updateProgress(index);
+}
+
+function selectOption(qIndex, optIndex) {
+  const q = QUESTIONS[qIndex];
+  const opt = q.options[optIndex];
+
+  // Visual feedback
+  const options = document.querySelectorAll('.option');
+  options.forEach(o => o.classList.remove('selected'));
+  options[optIndex].classList.add('selected');
+
+  // Store answer
+  answers[qIndex] = {
+    questionId: q.id,
+    optionIndex: optIndex,
+    score: opt.score,
+    tags: opt.tags
+  };
+
+  // Auto-advance after brief delay
+  setTimeout(() => {
+    if (currentQuestion < QUESTIONS.length - 1) {
+      currentQuestion++;
+      renderQuestion(currentQuestion);
+    } else {
+      showLeadCapture();
+    }
+  }, 400);
+}
+
+function updateProgress(index) {
+  const pct = Math.round(((index + 1) / QUESTIONS.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `Pergunta ${index + 1} de ${QUESTIONS.length}`;
+  document.getElementById('progressPercent').textContent = pct + '%';
+}
+
+function showLeadCapture() {
+  document.getElementById('screenQuestion').classList.remove('active');
+  document.getElementById('screenLead').classList.add('active');
+  document.getElementById('progressWrapper').style.display = 'none';
+  trackEvent('LeadFormViewed');
+}
+
+function submitLead() {
+  const name = document.getElementById('inputName').value.trim();
+  const email = document.getElementById('inputEmail').value.trim();
+  const phone = document.getElementById('inputPhone').value.trim();
+
+  if (!name) { document.getElementById('inputName').focus(); return; }
+  if (!email || !email.includes('@')) { document.getElementById('inputEmail').focus(); return; }
+
+  const btn = document.getElementById('btnSubmitLead');
+  btn.disabled = true;
+  btn.textContent = 'Processando...';
+
+  // Calculate results
+  const result = calculateResult();
+
+  // Send lead data (fire and forget - don't block the result)
+  sendLead({ name, email, phone, answers, result });
+
+  // Show loading animation
+  showLoading(name, result);
+}
+
+function calculateResult() {
+  // Calculate dimension scores
+  const dimensions = { filho: 0, mae: 0, familia: 0 };
+  const allTags = [];
+
+  answers.forEach((a, i) => {
+    if (i < 4) dimensions.filho += a.score;
+    else if (i < 8) dimensions.mae += a.score;
+    else dimensions.familia += a.score;
+    allTags.push(...a.tags);
+  });
+
+  // Determine profile
+  let bestProfile = 'consciente_acao';
+  let bestScore = 0;
+
+  for (const [key, profile] of Object.entries(PROFILES)) {
+    let matches = 0;
+    if (dimensions.filho >= profile.minScores.filho) matches++;
+    if (dimensions.mae >= profile.minScores.mae) matches++;
+    if (dimensions.familia >= profile.minScores.familia) matches++;
+
+    const totalRequired = (profile.minScores.filho > 0 ? 1 : 0) +
+                          (profile.minScores.mae > 0 ? 1 : 0) +
+                          (profile.minScores.familia > 0 ? 1 : 0);
+
+    const score = totalRequired > 0 ? (matches / Math.max(totalRequired, 1)) * (dimensions.filho + dimensions.mae + dimensions.familia) : 0;
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestProfile = key;
+    }
+  }
+
+  // Score products by tag matching
+  const scoredProducts = PRODUCTS.map(product => {
+    let matchCount = 0;
+    product.matchTags.forEach(tag => {
+      if (allTags.includes(tag)) matchCount++;
+    });
+    return {
+      ...product,
+      matchScore: matchCount * product.weight,
+      matchPercent: Math.min(98, Math.round(65 + (matchCount / product.matchTags.length) * 33))
+    };
+  }).filter(p => p.matchScore > 0)
+    .sort((a, b) => b.matchScore - a.matchScore)
+    .slice(0, 3);
+
+  // If less than 3 products matched, fill with highest weight defaults
+  if (scoredProducts.length < 3) {
+    const usedIds = scoredProducts.map(p => p.id);
+    const fillers = PRODUCTS
+      .filter(p => !usedIds.includes(p.id))
+      .sort((a, b) => b.weight - a.weight);
+    while (scoredProducts.length < 3 && fillers.length > 0) {
+      const filler = fillers.shift();
+      scoredProducts.push({ ...filler, matchScore: 1, matchPercent: 60 });
+    }
+  }
+
+  return { dimensions, profile: bestProfile, products: scoredProducts, tags: allTags };
+}
+
+function showLoading(name, result) {
+  document.getElementById('screenLead').classList.remove('active');
+  document.getElementById('screenLoading').classList.add('active');
+
+  const steps = ['loadStep1', 'loadStep2', 'loadStep3', 'loadStep4'];
+  steps.forEach((id, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      el.classList.add('done');
+      el.querySelector('.check').textContent = '✅';
+    }, 800 * (i + 1));
+  });
+
+  setTimeout(() => {
+    showResult(name, result);
+  }, 4000);
+}
+
+function showResult(name, result) {
+  document.getElementById('screenLoading').classList.remove('active');
+  document.getElementById('screenResult').classList.add('active');
+
+  const profile = PROFILES[result.profile];
+
+  // Header
+  document.getElementById('resultName').textContent = name;
+  document.getElementById('resultProfile').textContent = profile.name;
+
+  // Dimension scores
+  const dimHtml = [
+    { key: 'filho', label: '🧒 Dimensão do Filho', max: 16 },
+    { key: 'mae', label: '💜 Dimensão da Mãe', max: 16 },
+    { key: 'familia', label: '👨‍👩‍👧 Dimensão Familiar', max: 16 }
+  ].map(d => {
+    const score = result.dimensions[d.key];
+    const pct = Math.round((score / d.max) * 100);
+    let level, levelClass, barClass;
+    if (pct >= 75) { level = 'Crítico'; levelClass = 'level-critical'; barClass = 'critical'; }
+    else if (pct >= 50) { level = 'Alto'; levelClass = 'level-high'; barClass = 'high'; }
+    else if (pct >= 25) { level = 'Moderado'; levelClass = 'level-moderate'; barClass = 'moderate'; }
+    else { level = 'Baixo'; levelClass = 'level-low'; barClass = 'low'; }
+
+    return `<div class="dimension-score">
+      <div class="dimension-label">
+        <span>${d.label}</span>
+        <span class="dimension-level ${levelClass}">${level}</span>
+      </div>
+      <div class="score-bar">
+        <div class="score-fill ${barClass}" style="width: 0%" data-width="${pct}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('dimensionScores').innerHTML = dimHtml;
+  document.getElementById('insightText').innerHTML = profile.insight;
+
+  // Animate score bars
+  setTimeout(() => {
+    document.querySelectorAll('.score-fill').forEach(el => {
+      el.style.width = el.dataset.width;
+    });
+  }, 300);
+
+  // Product cards
+  const productHtml = result.products.map((p, i) => {
+    const isFirst = i === 0;
+    return `<div class="product-card" style="animation: fadeIn 0.5s ease ${0.3 * (i + 1)}s both">
+      ${isFirst ? '<span class="product-badge">🔥 Mais urgente pra você</span>' : ''}
+      <div class="product-rank">
+        <span class="rank-number">${i + 1}</span>
+        <span class="product-tag">${p.dimension === 'filho' ? 'Para seu filho' : p.dimension === 'mae' ? 'Para você' : 'Para a família'}</span>
+      </div>
+      <h4>${p.name}</h4>
+      <p class="product-desc">${p.description}</p>
+      <div class="product-match">✅ ${p.matchPercent}% compatível com seu perfil</div>
+      <a href="${p.link}" target="_blank" class="btn-cta" onclick="trackEvent('ProductClicked', {product: '${p.id}', position: ${i+1}})">
+        Quero Resolver Isso →
+      </a>
+    </div>`;
+  }).join('');
+
+  document.getElementById('productCards').innerHTML = productHtml;
+
+  trackEvent('ResultViewed', { profile: result.profile });
+}
+
+// ===================================================================
+// LEAD SUBMISSION
+// ===================================================================
+
+async function sendLead(data) {
+  try {
+    const payload = {
+      name: data.name,
+      email: data.email,
+      whatsapp: data.phone || null,
+      profile: data.result.profile,
+      dimensions: data.result.dimensions,
+      answers: data.answers.map(a => ({ q: a.questionId, o: a.optionIndex, s: a.score })),
+      recommended_products: data.result.products.map(p => p.id),
+      source: 'meta_ads',
+      utm_source: new URLSearchParams(window.location.search).get('utm_source') || null,
+      utm_medium: new URLSearchParams(window.location.search).get('utm_medium') || null,
+      utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || null
+    };
+
+    await fetch(SUPABASE_URL + '/rest/v1/quiz_leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    console.log('Lead saved to Supabase:', payload.email);
+    trackEvent('LeadCaptured', { email: data.email });
+  } catch (e) {
+    console.error('Lead submission error:', e);
+    // Don't block the user experience on error
+  }
+}
+
+// ===================================================================
+// ANALYTICS / TRACKING
+// ===================================================================
+
+function trackEvent(eventName, params = {}) {
+  // Meta Pixel
+  if (typeof fbq === 'function') {
+    if (eventName === 'LeadCaptured') {
+      fbq('track', 'Lead', params);
+    } else if (eventName === 'ProductClicked') {
+      fbq('track', 'InitiateCheckout', params);
+    } else {
+      fbq('trackCustom', eventName, params);
+    }
+  }
+
+  // GA4 (if configured)
+  if (typeof gtag === 'function') {
+    gtag('event', eventName, params);
+  }
+
+  console.log(`[Track] ${eventName}`, params);
+}
+
+// ===================================================================
+// SHARE
+// ===================================================================
+
+function shareResult() {
+  const text = 'Acabei de fazer o Raio-X da Mãe de Filho com TDAH e o resultado foi revelador! Faz o seu também:';
+  const url = window.location.href;
+
+  if (navigator.share) {
+    navigator.share({ title: 'Quiz TDAH - Raio-X', text, url }).catch(() => {});
+  } else {
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + ' ' + url)}`;
+    window.open(whatsappUrl, '_blank');
+  }
+  trackEvent('ResultShared');
+}
+
+</script>
+
+</body>
+</html>
