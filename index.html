@@ -713,6 +713,19 @@
     .product-card h4 { font-size:16px; font-weight:700; line-height:1.3; margin-bottom:6px; color:var(--neutral-900); }
     .product-desc { font-size:14px; color:var(--neutral-600); line-height:1.5; margin-bottom:12px; }
 
+    .product-price {
+      display:flex; align-items:baseline; gap:10px; margin-bottom:12px;
+      padding:10px 14px; background:var(--primary-50); border-radius:var(--radius-sm);
+      border-left:3px solid var(--primary-500); flex-wrap:wrap;
+    }
+    .price-value {
+      font-size:24px; font-weight:800; color:var(--primary-600);
+      font-family:var(--ff-body); line-height:1;
+    }
+    .price-anchor {
+      font-size:11px; color:var(--neutral-600); font-weight:600; font-style:italic;
+    }
+
     .product-match {
       display:flex; align-items:center; gap:6px; margin-bottom:14px;
     }
@@ -780,7 +793,26 @@
     .expert-info .name { font-size:14px; font-weight:700; color:var(--neutral-900); }
     .expert-info .title { font-size:12px; color:var(--neutral-600); line-height:1.4; }
 
-    /* Bundle benefits (replaces pricing) */
+    /* Bundle pricing */
+    .bundle-pricing {
+      display:flex; align-items:baseline; justify-content:center; gap:12px;
+      margin-bottom:14px; flex-wrap:wrap; padding:12px;
+      background:rgba(255,255,255,.6); border-radius:var(--radius-sm);
+    }
+    .bundle-original {
+      font-size:15px; color:var(--neutral-500); text-decoration:line-through;
+      font-weight:600;
+    }
+    .bundle-final {
+      font-size:32px; font-weight:800; color:var(--primary-600);
+      font-family:var(--ff-body); line-height:1;
+    }
+    .bundle-savings {
+      font-size:11px; color:var(--green-700); font-weight:700;
+      background:var(--green-50); padding:4px 10px; border-radius:var(--radius-full);
+      display:inline-block; margin-top:4px;
+    }
+    .bundle-desc { font-size:13px; color:var(--neutral-700); line-height:1.6; margin-bottom:14px; text-align:left; }
     .bundle-benefits { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; text-align:left; padding:0 8px; }
     .benefit-item { font-size:13px; font-weight:600; color:var(--neutral-700); }
 
@@ -1221,13 +1253,18 @@
 
     <div class="bundle-section" id="bundleSection" style="display:none">
       <div class="bundle-card">
-        <div class="bundle-badge">Oferta Especial — Só Hoje</div>
+        <div class="bundle-badge">Oferta Especial Pra Você</div>
         <h4 id="bundleTitle">Pack Resgate Completo</h4>
         <p id="bundleDesc" class="bundle-desc"></p>
+        <div class="bundle-pricing">
+          <span class="bundle-original" id="bundleOriginal"></span>
+          <span class="bundle-final" id="bundleFinal"></span>
+          <span class="bundle-savings">Economia: <span id="bundleSavings"></span></span>
+        </div>
         <div class="bundle-benefits">
-          <div class="benefit-item">✓ Descontos exclusivos no checkout</div>
           <div class="benefit-item">✓ Acesso imediato e vitalício</div>
-          <div class="benefit-item">✓ Garantia incondicional Hotmart</div>
+          <div class="benefit-item">✓ Garantia incondicional Hotmart de 7 dias</div>
+          <div class="benefit-item">✓ Suporte direto da equipe TDAH com André</div>
         </div>
         <a id="bundleLink" href="#" target="_blank" class="btn-product primary" onclick="trackEvent('BundleClicked',{profile:window._quizProfile})">
           Quero o Pack Completo →
@@ -1420,6 +1457,7 @@ const PRODUCTS = [
     name:'Rotina TDAH Sem Caos',
     desc:'O método criado por quem viveu o TDAH na pele — passo a passo para seu filho ter uma rotina funcional sem gritos e sem repetição.',
     link:'https://pay.hotmart.com/C103477312Y',
+    price:'R$ 37,00', priceNum:37.00,
     tags:['rotina_critica','rotina_fragil','rotina_instavel','escola_crise','escola_dificuldade','conhecimento_zero','conhecimento_teorico'],
     dim:'filho', weight:12
   },
@@ -1428,6 +1466,7 @@ const PRODUCTS = [
     name:'Kit Emergencial Para Mãe Atípica Sobrecarregada',
     desc:'Resgate imediato com o método R.I.T.M.O. — para quando você sente que vai desmoronar e precisa de fôlego AGORA.',
     link:'https://pay.hotmart.com/C101654030B',
+    price:'R$ 49,90', priceNum:49.90,
     tags:['culpa_extrema','culpa_alta','burnout_extremo','burnout_alto','solidao_extrema','solidao_alta'],
     dim:'mae', weight:11
   },
@@ -1436,6 +1475,7 @@ const PRODUCTS = [
     name:'Meu Filho Tem TDAH! E Agora?!',
     desc:'O guia que transforma o medo do diagnóstico em clareza e ação — tudo que você precisa saber sem jargão médico.',
     link:'https://pay.hotmart.com/C101654175J',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['medicacao_medo','diagnostico_processo','conhecimento_zero','conhecimento_teorico','escola_crise','escola_dificuldade'],
     dim:'filho', weight:10
   },
@@ -1444,6 +1484,7 @@ const PRODUCTS = [
     name:'Como Fazer Seu Parceiro Participar de Verdade',
     desc:'O roteiro para transformar resistência em parceria real — sem briga, sem ultimato.',
     link:'https://pay.hotmart.com/V101616698U',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['parceiro_ausente','parceiro_desinformado','parceiro_passivo','conflito_grave','conflito_alto'],
     dim:'familia', weight:10
   },
@@ -1452,6 +1493,7 @@ const PRODUCTS = [
     name:'Família em Transformação — Pack Completo (8 eBooks)',
     desc:'Pack completo com 8 guias: Comunicação Familiar + Limites + Ansiedade + Parceria + Tarefas + Rotina + Emocional + Valores. Tudo que sua família precisa num só lugar.',
     link:'https://pay.hotmart.com/V101617315F',
+    price:'R$ 59,90', priceNum:59.90,
     tags:['rotina_critica','rotina_fragil','culpa_extrema','culpa_alta','burnout_extremo','burnout_alto','parceiro_ausente','parceiro_desinformado','conflito_grave','conflito_alto','rede_julgamento','solidao_extrema','solidao_alta'],
     dim:'familia', weight:9
   },
@@ -1460,6 +1502,7 @@ const PRODUCTS = [
     name:'A Arte da Comunicação Familiar',
     desc:'Troque gritos por diálogo. Menos brigas, mais respeito, uma rotina que flui.',
     link:'https://pay.hotmart.com/F101616239A',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['conflito_grave','conflito_alto','conflito_moderado','emocional_explosivo','emocional_reativo','parceiro_desinformado'],
     dim:'familia', weight:8
   },
@@ -1468,6 +1511,7 @@ const PRODUCTS = [
     name:'Como Ajudar Crianças a Estabelecer Limites',
     desc:'Firmeza com afeto — regras claras que seu filho respeita sem castigos e sem gritos.',
     link:'https://pay.hotmart.com/Y101616449U',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['emocional_explosivo','emocional_reativo','rotina_critica','rotina_fragil','escola_crise'],
     dim:'filho', weight:8
   },
@@ -1476,6 +1520,7 @@ const PRODUCTS = [
     name:'Como Superar a Ansiedade',
     desc:'Técnicas de respiração, mindfulness e mudanças simples para sair do piloto automático.',
     link:'https://pay.hotmart.com/R101616873F',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['burnout_extremo','burnout_alto','burnout_moderado','culpa_extrema','culpa_alta','solidao_extrema'],
     dim:'mae', weight:8
   },
@@ -1484,6 +1529,7 @@ const PRODUCTS = [
     name:'Desintoxique Seu Filho da Dependência Digital',
     desc:'Plano Detox Digital em 21 dias — resgate o sono, o foco e a infância do seu filho.',
     link:'https://pay.hotmart.com/L101654222B',
+    price:'R$ 59,90', priceNum:59.90,
     tags:['rotina_critica','rotina_fragil','rotina_instavel','escola_crise','escola_dificuldade','emocional_explosivo'],
     dim:'filho', weight:7
   },
@@ -1492,6 +1538,7 @@ const PRODUCTS = [
     name:'Conexão Letras e Mentes — TDAH e Amor pela Leitura',
     desc:'Transforme a dificuldade de leitura em paixão com estratégias e recursos interativos.',
     link:'https://pay.hotmart.com/J93818562O',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['escola_crise','escola_dificuldade','escola_suporte','conhecimento_disperso'],
     dim:'filho', weight:7
   },
@@ -1500,6 +1547,7 @@ const PRODUCTS = [
     name:'Envolver a Família nas Tarefas Domésticas',
     desc:'8 passos práticos para dividir o peso da casa — chega de carregar tudo sozinha.',
     link:'https://pay.hotmart.com/P101616927L',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['parceiro_ausente','parceiro_passivo','burnout_extremo','burnout_alto','conflito_alto'],
     dim:'familia', weight:6
   },
@@ -1508,6 +1556,7 @@ const PRODUCTS = [
     name:'Histórias que Conectam',
     desc:'Fortaleça o vínculo com seu filho criando histórias juntos — momentos que viram memórias.',
     link:'https://pay.hotmart.com/V101616784N',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['emocional_moderado','emocional_estavel','solidao_moderada','rotina_ok','escola_suporte'],
     dim:'filho', weight:5
   },
@@ -1516,6 +1565,7 @@ const PRODUCTS = [
     name:'Sementes de Virtude — Caráter Forte e Compassivo',
     desc:'Forme filhos com valores profundos — empatia, coragem e responsabilidade.',
     link:'https://pay.hotmart.com/R101616985Q',
+    price:'R$ 19,90', priceNum:19.90,
     tags:['emocional_moderado','emocional_estavel','rotina_ok','escola_ok','conhecimento_bom'],
     dim:'filho', weight:5
   }
@@ -2148,20 +2198,36 @@ function showResult(name,result) {
       <div class="product-rank"><span class="rank-num">${i+1}</span><span class="product-tag">${dimLabels[p.dim]||''}</span></div>
       <h4>${p.name}</h4>
       <p class="product-desc">${p.desc}</p>
-      <div class="product-match"><div class="match-bar-track"><div class="match-bar-fill" style="width:${p.matchPct}%"></div></div><span class="match-pct">${p.matchPct}%</span></div>
-      <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1}})">Quero Resolver Isso →</a>
+      <div class="product-price">
+        <span class="price-value">${p.price}</span>
+        <span class="price-anchor">${p.priceNum <= 25 ? 'Menos que uma pizza' : p.priceNum <= 50 ? 'Menos que um delivery de fim de semana' : 'Menos que uma consulta'}</span>
+      </div>
+      <div class="product-match"><div class="match-bar-track"><div class="match-bar-fill" style="width:${p.matchPct}%"></div></div><span class="match-pct">${p.matchPct}% match</span></div>
+      <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1},price:${p.priceNum}})">Quero por ${p.price} →</a>
     </div>`;
   }).join('');
 
-  // Bundle offer for severe profiles
+  // Bundle offer for severe profiles - REAL price calculation with 30% discount
   const severeProfiles = ['guerreira_exausta','mae_solitaria','lar_em_guerra','filho_vulcao'];
   if(severeProfiles.includes(result.profile)) {
     const bundleEl = document.getElementById('bundleSection');
     bundleEl.style.display = 'block';
 
     const bundleProducts = result.products;
-    document.getElementById('bundleTitle').textContent = 'Pack Resgate — ' + bundleProducts.length + ' Guias Selecionados';
-    document.getElementById('bundleDesc').textContent = 'Pack com ' + bundleProducts.length + ' guias selecionados especialmente para o seu perfil — ' + bundleProducts.map(p => p.name).join(' • ');
+    const totalOriginal = bundleProducts.reduce((sum,p) => sum + (p.priceNum || 0), 0);
+    const discount = 0.30; // 30% off
+    const bundleFinal = totalOriginal * (1 - discount);
+    const savings = totalOriginal - bundleFinal;
+    const fmt = (n) => 'R$ ' + n.toFixed(2).replace('.',',');
+
+    document.getElementById('bundleTitle').textContent = 'Pack Resgate Completo — ' + bundleProducts.length + ' Guias';
+    document.getElementById('bundleDesc').innerHTML = bundleProducts.map(p => '✓ ' + p.name + ' <span style="color:var(--neutral-400);font-weight:500">(' + p.price + ')</span>').join('<br>');
+    const orig = document.getElementById('bundleOriginal');
+    const fin = document.getElementById('bundleFinal');
+    const sav = document.getElementById('bundleSavings');
+    if(orig) { orig.style.display = 'inline'; orig.textContent = 'De ' + fmt(totalOriginal); }
+    if(fin) { fin.style.display = 'inline'; fin.textContent = fmt(bundleFinal); }
+    if(sav) { sav.style.display = 'inline'; sav.textContent = fmt(savings) + ' (30% OFF)'; }
     document.getElementById('bundleLink').href = bundleProducts[0].link;
   }
 
