@@ -35,6 +35,24 @@
   <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=890243330358243&ev=PageView&noscript=1" /></noscript>
 
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WDMS76MJ');</script>
+
+  <!-- TikTok Pixel -->
+  <script>
+  !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var i=d.createElement("script");i.type="text/javascript",i.async=!0,i.src=r+"?sdkid="+e+"&lib="+t;var a=d.getElementsByTagName("script")[0];a.parentNode.insertBefore(i,a)};
+  ttq.load('6968fe3dfb3eb496b4130723');ttq.page();}(window,document,'ttq');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script>
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","vwqcvvik00");
+  </script>
+
   <style>
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
@@ -762,6 +780,83 @@
     .expert-info .name { font-size:14px; font-weight:700; color:var(--neutral-900); }
     .expert-info .title { font-size:12px; color:var(--neutral-600); line-height:1.4; }
 
+    /* Price display */
+    .product-price {
+      display:flex; align-items:baseline; gap:8px; margin-bottom:12px;
+    }
+    .price-value {
+      font-size:22px; font-weight:800; color:var(--primary-600);
+      font-family:var(--ff-body);
+    }
+    .price-anchor {
+      font-size:12px; color:var(--neutral-400); font-weight:500;
+    }
+
+    /* Micro-insights */
+    .micro-insights {
+      margin-top:16px; padding-top:14px;
+      border-top:1px solid var(--neutral-200);
+    }
+    .micro-insight-label {
+      font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+      color:var(--primary-500); margin-bottom:8px;
+    }
+    .micro-insight-item {
+      font-size:14px; line-height:1.6; color:var(--neutral-600);
+      margin-bottom:6px; padding-left:4px;
+    }
+
+    /* Urgency Timer */
+    .urgency-timer {
+      display:flex; justify-content:center; gap:12px; margin-top:12px;
+    }
+    .timer-block {
+      display:flex; flex-direction:column; align-items:center;
+      background:rgba(255,255,255,.1); border-radius:8px; padding:8px 12px; min-width:50px;
+    }
+    .timer-num {
+      font-size:22px; font-weight:800; font-family:var(--ff-body); color:var(--accent-400);
+    }
+    .timer-label {
+      font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; opacity:.7;
+    }
+
+    /* Bundle section */
+    .bundle-section { animation:fadeUp .5s ease .6s both; }
+    .bundle-card {
+      background:linear-gradient(135deg, var(--primary-50), var(--accent-50));
+      border:2px solid var(--primary-400);
+      border-radius:var(--radius-lg);
+      padding:24px; text-align:center;
+      position:relative; overflow:hidden;
+    }
+    .bundle-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--primary-500),var(--accent-500));
+    }
+    .bundle-badge {
+      display:inline-block; background:var(--primary-500); color:white;
+      padding:4px 14px; border-radius:var(--radius-full);
+      font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+      margin-bottom:12px;
+    }
+    .bundle-card h4 { font-size:18px; font-weight:800; margin-bottom:8px; color:var(--neutral-900); }
+    .bundle-desc { font-size:14px; color:var(--neutral-600); line-height:1.5; margin-bottom:14px; }
+    .bundle-pricing {
+      display:flex; align-items:baseline; justify-content:center; gap:10px;
+      margin-bottom:16px; flex-wrap:wrap;
+    }
+    .bundle-original {
+      font-size:16px; color:var(--neutral-400); text-decoration:line-through;
+    }
+    .bundle-final {
+      font-size:28px; font-weight:800; color:var(--primary-600);
+    }
+    .bundle-savings {
+      font-size:12px; color:var(--green-600); font-weight:600;
+      background:var(--green-50); padding:3px 8px; border-radius:var(--radius-full);
+    }
+
     /* === RESPONSIVE === */
     @media(max-width:400px) {
       .welcome h1 { font-size:26px; }
@@ -820,6 +915,9 @@
   </style>
 </head>
 <body>
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WDMS76MJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="bg-pattern"></div>
 
@@ -984,6 +1082,22 @@
         <p>Na ordem exata que você precisa seguir</p>
       </div>
       <div id="productCards"></div>
+    </div>
+
+    <div class="bundle-section" id="bundleSection" style="display:none">
+      <div class="bundle-card">
+        <div class="bundle-badge">Oferta Especial — Só Hoje</div>
+        <h4 id="bundleTitle">Pack Resgate Completo</h4>
+        <p id="bundleDesc" class="bundle-desc"></p>
+        <div class="bundle-pricing">
+          <span class="bundle-original" id="bundleOriginal"></span>
+          <span class="bundle-final" id="bundleFinal"></span>
+          <span class="bundle-savings">Economia de <span id="bundleSavings"></span></span>
+        </div>
+        <a id="bundleLink" href="#" target="_blank" class="btn-product primary" onclick="trackEvent('BundleClicked',{profile:window._quizProfile})">
+          Quero o Pack Completo →
+        </a>
+      </div>
     </div>
 
     <div class="expert-stamp">
@@ -1159,7 +1273,8 @@ const PRODUCTS = [
     id:'rotina_sem_caos',
     name:'Rotina TDAH Sem Caos',
     desc:'O método criado por quem viveu o TDAH na pele — passo a passo para seu filho ter uma rotina funcional sem gritos e sem repetição.',
-    link:'https://rotinatdahsemcaos.online/',
+    link:'https://pay.hotmart.com/C103477312Y',
+    price:'R$ 37,00',
     tags:['rotina_critica','rotina_fragil','rotina_instavel','escola_crise','escola_dificuldade','conhecimento_zero','conhecimento_teorico'],
     dim:'filho', weight:12
   },
@@ -1167,7 +1282,8 @@ const PRODUCTS = [
     id:'kit_emergencial',
     name:'Kit Emergencial Para Mãe Atípica Sobrecarregada',
     desc:'Resgate imediato com o método R.I.T.M.O. — para quando você sente que vai desmoronar e precisa de fôlego AGORA.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/kit-emergencial-para-mae-atipica-sobrecarregada-resgate-imediato-do-equilibrio-e-da-forca-interior/C101654030B',
+    link:'https://pay.hotmart.com/C101654030B',
+    price:'R$ 27,00',
     tags:['culpa_extrema','culpa_alta','burnout_extremo','burnout_alto','solidao_extrema','solidao_alta'],
     dim:'mae', weight:11
   },
@@ -1175,7 +1291,8 @@ const PRODUCTS = [
     id:'meu_filho_tdah',
     name:'Meu Filho Tem TDAH! E Agora?!',
     desc:'O guia que transforma o medo do diagnóstico em clareza e ação — tudo que você precisa saber sem jargão médico.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/meu-filho-tem-tdah-e-agora-um-caminho-de-compreensao-acolhimento-acao-para-maes-que-querem-transformar-o-diagnostico-em-esperanca/C101654175J',
+    link:'https://pay.hotmart.com/C101654175J',
+    price:'R$ 19,90',
     tags:['medicacao_medo','diagnostico_processo','conhecimento_zero','conhecimento_teorico','escola_crise','escola_dificuldade'],
     dim:'filho', weight:10
   },
@@ -1183,15 +1300,17 @@ const PRODUCTS = [
     id:'parceiro_participar',
     name:'Como Fazer Seu Parceiro Participar de Verdade',
     desc:'O roteiro para transformar resistência em parceria real — sem briga, sem ultimato.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/como-fazer-seu-parceiro-participar-de-verdade-no-tratamento-do-seu-filho-neurodivergente/V101616698U',
+    link:'https://pay.hotmart.com/V101616698U',
+    price:'R$ 19,90',
     tags:['parceiro_ausente','parceiro_desinformado','parceiro_passivo','conflito_grave','conflito_alto'],
     dim:'familia', weight:10
   },
   {
     id:'familia_transformacao',
     name:'Família em Transformação — Pack Completo (8 eBooks)',
-    desc:'A solução completa: comunicação, limites, ansiedade, parceria, tarefas — 8 guias que cobrem tudo.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/familia-em-transformacao-o-pack-completo-para-pais-que-querem-educar-com-amor-limites-e-equilibrio/V101617315F',
+    desc:'Pack completo com 8 guias: Comunicação Familiar + Limites + Ansiedade + Parceria + Tarefas + Rotina + Emocional + Valores. Tudo que sua família precisa num só lugar.',
+    link:'https://pay.hotmart.com/V101617315F',
+    price:'R$ 97,00',
     tags:['rotina_critica','rotina_fragil','culpa_extrema','culpa_alta','burnout_extremo','burnout_alto','parceiro_ausente','parceiro_desinformado','conflito_grave','conflito_alto','rede_julgamento','solidao_extrema','solidao_alta'],
     dim:'familia', weight:9
   },
@@ -1199,7 +1318,8 @@ const PRODUCTS = [
     id:'comunicacao_familiar',
     name:'A Arte da Comunicação Familiar',
     desc:'Troque gritos por diálogo. Menos brigas, mais respeito, uma rotina que flui.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/a-arte-da-comunicacao-familiar/F101616239A',
+    link:'https://pay.hotmart.com/F101616239A',
+    price:'R$ 19,90',
     tags:['conflito_grave','conflito_alto','conflito_moderado','emocional_explosivo','emocional_reativo','parceiro_desinformado'],
     dim:'familia', weight:8
   },
@@ -1207,7 +1327,8 @@ const PRODUCTS = [
     id:'estabelecer_limites',
     name:'Como Ajudar Crianças a Estabelecer Limites',
     desc:'Firmeza com afeto — regras claras que seu filho respeita sem castigos e sem gritos.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/como-ajudar-criancas-a-estabelecer-limites-guia-pratico-para-pais-e-educadores/Y101616449U',
+    link:'https://pay.hotmart.com/Y101616449U',
+    price:'R$ 19,90',
     tags:['emocional_explosivo','emocional_reativo','rotina_critica','rotina_fragil','escola_crise'],
     dim:'filho', weight:8
   },
@@ -1215,7 +1336,8 @@ const PRODUCTS = [
     id:'superar_ansiedade',
     name:'Como Superar a Ansiedade',
     desc:'Técnicas de respiração, mindfulness e mudanças simples para sair do piloto automático.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/hagsxd-como-superar-a-ansiedade-lx32q/R101616873F',
+    link:'https://pay.hotmart.com/R101616873F',
+    price:'R$ 19,90',
     tags:['burnout_extremo','burnout_alto','burnout_moderado','culpa_extrema','culpa_alta','solidao_extrema'],
     dim:'mae', weight:8
   },
@@ -1223,7 +1345,8 @@ const PRODUCTS = [
     id:'detox_digital',
     name:'Desintoxique Seu Filho da Dependência Digital',
     desc:'Plano Detox Digital em 21 dias — resgate o sono, o foco e a infância do seu filho.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/desintoxique-seu-filho-da-dependencia-digital/L101654222B',
+    link:'https://pay.hotmart.com/L101654222B',
+    price:'R$ 27,00',
     tags:['rotina_critica','rotina_fragil','rotina_instavel','escola_crise','escola_dificuldade','emocional_explosivo'],
     dim:'filho', weight:7
   },
@@ -1231,7 +1354,8 @@ const PRODUCTS = [
     id:'conexao_leitura',
     name:'Conexão Letras e Mentes — TDAH e Amor pela Leitura',
     desc:'Transforme a dificuldade de leitura em paixão com estratégias e recursos interativos.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/conexao-letras-e-mentes-transformando-o-desafio-do-tdah-em-amor-pela-leitura/J93818562O',
+    link:'https://pay.hotmart.com/J93818562O',
+    price:'R$ 19,90',
     tags:['escola_crise','escola_dificuldade','escola_suporte','conhecimento_disperso'],
     dim:'filho', weight:7
   },
@@ -1239,7 +1363,8 @@ const PRODUCTS = [
     id:'tarefas_domesticas',
     name:'Envolver a Família nas Tarefas Domésticas',
     desc:'8 passos práticos para dividir o peso da casa — chega de carregar tudo sozinha.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/guia-completo-de-como-envolver-a-familia-nas-tarefas-domesticas/P101616927L',
+    link:'https://pay.hotmart.com/P101616927L',
+    price:'R$ 19,90',
     tags:['parceiro_ausente','parceiro_passivo','burnout_extremo','burnout_alto','conflito_alto'],
     dim:'familia', weight:6
   },
@@ -1247,7 +1372,8 @@ const PRODUCTS = [
     id:'historias_conectam',
     name:'Histórias que Conectam',
     desc:'Fortaleça o vínculo com seu filho criando histórias juntos — momentos que viram memórias.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/historias-que-conectam-como-criar-uma-historia-compartilhada-com-seu-filho/V101616784N',
+    link:'https://pay.hotmart.com/V101616784N',
+    price:'R$ 19,90',
     tags:['emocional_moderado','emocional_estavel','solidao_moderada','rotina_ok','escola_suporte'],
     dim:'filho', weight:5
   },
@@ -1255,7 +1381,8 @@ const PRODUCTS = [
     id:'sementes_virtude',
     name:'Sementes de Virtude — Caráter Forte e Compassivo',
     desc:'Forme filhos com valores profundos — empatia, coragem e responsabilidade.',
-    link:'https://hotmart.com/pt-br/marketplace/produtos/sementes-de-virtude-como-cultivar-um-carater-forte-e-compassivo-em-seu-filho/R101616985Q',
+    link:'https://pay.hotmart.com/R101616985Q',
+    price:'R$ 19,90',
     tags:['emocional_moderado','emocional_estavel','rotina_ok','escola_ok','conhecimento_bom'],
     dim:'filho', weight:5
   }
@@ -1334,8 +1461,15 @@ const PROFILES = {
   equilibrista: {
     name:'A Equilibrista',
     test:(d) => d.filho>=6 && d.mae>=6 && d.familia>=6,
+    getName:(d) => (d.filho + d.mae + d.familia) >= 27 ? 'A Equilibrista no Limite' : 'A Equilibrista',
     alert:'<strong>Você não está em crise — mas está a um dia ruim de distância dela.</strong> O equilíbrio que você mantém é frágil, e você sabe disso.',
+    getAlert:(d) => (d.filho + d.mae + d.familia) >= 27
+      ? '<strong>Você está se equilibrando em uma corda bamba — e a corda está ficando fina.</strong> Todas as dimensões estão elevadas simultaneamente. Mais um empurrão e o sistema desmorona.'
+      : '<strong>Você não está em crise — mas está a um dia ruim de distância dela.</strong> O equilíbrio que você mantém é frágil, e você sabe disso.',
     insight:'Seu raio-x mostra desafios <span class="highlight">moderados em todas as dimensões</span>. Não está em colapso, mas também não está no controle. Cada área puxa um pouquinho — e a soma desses "pouquinhos" é o <strong>cansaço crônico de quem faz muito mas sente que nada avança</strong>.<br><br>A boa notícia? Você está <span class="highlight">mais perto de virar o jogo do que imagina</span>. Não precisa de uma revolução — precisa organizar suas prioridades na ordem certa e ter as ferramentas certas para cada desafio.',
+    getInsight:(d) => (d.filho + d.mae + d.familia) >= 27
+      ? 'Seu raio-x mostra desafios <span class="highlight">altos em todas as dimensões</span>. Nenhuma área está em colapso total, mas todas estão pressionadas. Isso é pior do que parece — porque <strong>não tem onde aliviar</strong>.<br><br>Você está mantendo tudo funcionando à base de força de vontade. Mas vontade tem prazo de validade. <strong>Sem uma ação estruturada agora</strong>, o desgaste vai escolher por você <span class="highlight">qual dimensão colapsa primeiro</span>.'
+      : 'Seu raio-x mostra desafios <span class="highlight">moderados em todas as dimensões</span>. Não está em colapso, mas também não está no controle. Cada área puxa um pouquinho — e a soma desses "pouquinhos" é o <strong>cansaço crônico de quem faz muito mas sente que nada avança</strong>.<br><br>A boa notícia? Você está <span class="highlight">mais perto de virar o jogo do que imagina</span>. Não precisa de uma revolução — precisa organizar suas prioridades na ordem certa e ter as ferramentas certas para cada desafio.',
     warnings:[
       {icon:'⚡',text:'Equilíbrio frágil — qualquer imprevisto pode desencadear uma espiral'},
       {icon:'🔋',text:'Energia no limite — funcionando mas sem reserva para emergências'},
@@ -1588,10 +1722,11 @@ function showResult(name,result) {
   history.replaceState({screen:'result'}, '', '#resultado');
 
   const prof = PROFILES[result.profile];
+  window._quizProfile = result.profile;
 
   document.getElementById('rName').textContent='Seu Raio-X, '+name;
-  document.getElementById('rProfile').textContent=prof.name;
-  document.getElementById('alertText').innerHTML=prof.alert;
+  document.getElementById('rProfile').textContent = prof.getName ? prof.getName(result.dims) : prof.name;
+  document.getElementById('alertText').innerHTML = prof.getAlert ? prof.getAlert(result.dims) : prof.alert;
 
   // Dimensions
   const dimData=[
@@ -1611,14 +1746,47 @@ function showResult(name,result) {
 
   setTimeout(()=>{document.querySelectorAll('.dim-fill').forEach(el=>{el.style.width=el.dataset.w;});},400);
 
-  // Insight
-  document.getElementById('insightText').innerHTML = prof.insight;
+  // Insight with micro-variations based on specific tags
+  let insightHtml = prof.getInsight ? prof.getInsight(result.dims) : prof.insight;
+  const tags = result.tags;
+  let extraInsights = [];
+  if(tags.includes('medicacao_medo')) extraInsights.push('Seu medo sobre medicação é válido — e existem caminhos para tomar decisões informadas com segurança.');
+  if(tags.includes('diagnostico_processo')) extraInsights.push('Estar no processo de diagnóstico é uma das fases mais angustiantes. Ter um guia faz toda a diferença.');
+  if(tags.includes('mae_solo')) extraInsights.push('Como mãe solo, cada decisão tem o dobro do peso. Você não está sozinha nessa.');
+  if(tags.includes('financeiro_critico')) extraInsights.push('A pressão financeira do tratamento é real. Existem estratégias para maximizar cada recurso.');
+  if(tags.includes('emocional_explosivo') && tags.includes('escola_crise')) extraInsights.push('A combinação de explosões emocionais com crise escolar pede intervenção estruturada urgente.');
+  if(extraInsights.length > 0) {
+    insightHtml += '<div class="micro-insights"><p class="micro-insight-label">Observações específicas do seu caso:</p>' + extraInsights.map(t => '<p class="micro-insight-item">→ ' + t + '</p>').join('') + '</div>';
+  }
+  document.getElementById('insightText').innerHTML = insightHtml;
   document.getElementById('warningList').innerHTML = prof.warnings.map(w=>
     `<li><span class="wi" aria-hidden="true">${w.icon}</span>${w.text}</li>`
   ).join('');
 
-  // Urgency
-  document.getElementById('urgencyStrip').innerHTML = `<span class="big">Não ignore esse resultado.</span><p>${prof.urgency}</p>`;
+  // Urgency with countdown timer
+  const urgencyEl = document.getElementById('urgencyStrip');
+  let firstVisit = localStorage.getItem('quiz_first_result');
+  if(!firstVisit) {
+    firstVisit = Date.now().toString();
+    localStorage.setItem('quiz_first_result', firstVisit);
+  }
+  const deadline = parseInt(firstVisit) + 24*60*60*1000;
+  function updateTimer() {
+    const now = Date.now();
+    const diff = Math.max(0, deadline - now);
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    urgencyEl.innerHTML = `<span class="big">Não ignore esse resultado.</span><p>${prof.urgency}</p>
+      <div class="urgency-timer">
+        <div class="timer-block"><span class="timer-num">${String(h).padStart(2,'0')}</span><span class="timer-label">horas</span></div>
+        <div class="timer-block"><span class="timer-num">${String(m).padStart(2,'0')}</span><span class="timer-label">min</span></div>
+        <div class="timer-block"><span class="timer-num">${String(s).padStart(2,'0')}</span><span class="timer-label">seg</span></div>
+      </div>
+      <p style="margin-top:8px;font-size:12px;opacity:.7">Acesso ao plano personalizado expira em breve</p>`;
+    if(diff > 0) setTimeout(updateTimer, 1000);
+  }
+  updateTimer();
 
   // Products
   const dimLabels = {filho:'Para seu filho',mae:'Para você',familia:'Para a família'};
@@ -1633,10 +1801,34 @@ function showResult(name,result) {
       <div class="product-rank"><span class="rank-num">${i+1}</span><span class="product-tag">${dimLabels[p.dim]||''}</span></div>
       <h4>${p.name}</h4>
       <p class="product-desc">${p.desc}</p>
+      <div class="product-price"><span class="price-value">${p.price}</span><span class="price-anchor">Menos que uma pizza</span></div>
       <div class="product-match"><div class="match-bar-track"><div class="match-bar-fill" style="width:${p.matchPct}%"></div></div><span class="match-pct">${p.matchPct}%</span></div>
       <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1}})">Quero Resolver Isso →</a>
     </div>`;
   }).join('');
+
+  // Bundle offer for severe profiles
+  const severeProfiles = ['guerreira_exausta','mae_solitaria','lar_em_guerra','filho_vulcao'];
+  if(severeProfiles.includes(result.profile)) {
+    const bundleEl = document.getElementById('bundleSection');
+    bundleEl.style.display = 'block';
+
+    const bundleProducts = result.products;
+    const totalOriginal = bundleProducts.reduce((sum, p) => {
+      const priceNum = parseFloat(p.price.replace('R$ ','').replace(',','.'));
+      return sum + priceNum;
+    }, 0);
+    const discount = 0.30;
+    const bundleFinal = totalOriginal * (1 - discount);
+    const savings = totalOriginal - bundleFinal;
+
+    document.getElementById('bundleTitle').textContent = 'Pack Resgate — ' + bundleProducts.length + ' Guias';
+    document.getElementById('bundleDesc').textContent = bundleProducts.map(p => p.name).join(' + ');
+    document.getElementById('bundleOriginal').textContent = 'De R$ ' + totalOriginal.toFixed(2).replace('.',',');
+    document.getElementById('bundleFinal').textContent = 'R$ ' + bundleFinal.toFixed(2).replace('.',',');
+    document.getElementById('bundleSavings').textContent = 'R$ ' + savings.toFixed(2).replace('.',',');
+    document.getElementById('bundleLink').href = bundleProducts[0].link;
+  }
 
   trackEvent('ResultViewed',{profile:result.profile});
 }
@@ -1672,12 +1864,22 @@ async function sendLead(data) {
 // ===================================================================
 
 function trackEvent(ev, params={}) {
+  // Add profile to params for remarketing segmentation
+  if(window._quizProfile) params.quiz_profile = window._quizProfile;
+
   if(typeof fbq==='function'){
-    if(ev==='LeadCaptured')fbq('track','Lead',params);
-    else if(ev==='ProductClicked')fbq('track','InitiateCheckout',params);
+    if(ev==='LeadCaptured') fbq('track','Lead',params);
+    else if(ev==='ProductClicked') fbq('track','InitiateCheckout',params);
     else fbq('trackCustom',ev,params);
   }
-  if(typeof gtag==='function')gtag('event',ev,params);
+  if(typeof gtag==='function') gtag('event',ev,params);
+  if(typeof ttq==='object' && ttq.track) {
+    if(ev==='LeadCaptured') ttq.track('SubmitForm',params);
+    else if(ev==='ProductClicked') ttq.track('ClickButton',params);
+    else if(ev==='ResultViewed') ttq.track('ViewContent',params);
+  }
+  // Push to dataLayer for GTM
+  if(typeof dataLayer !== 'undefined') dataLayer.push({event:ev, ...params});
 }
 
 function shareResult() {
@@ -1713,6 +1915,19 @@ window.addEventListener('DOMContentLoaded', () => {
   const inEmail = document.getElementById('inEmail');
   if(inName) inName.addEventListener('blur', () => { if(inName.value.trim()) validateField('inName','errName','Por favor, insira seu nome.'); });
   if(inEmail) inEmail.addEventListener('blur', () => { if(inEmail.value.trim()) validateField('inEmail','errEmail','Por favor, insira um email válido.'); });
+
+  // Phone mask
+  const inPhone = document.getElementById('inPhone');
+  if(inPhone) {
+    inPhone.addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, '');
+      if(v.length > 11) v = v.slice(0,11);
+      if(v.length > 7) v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+      else if(v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+      else if(v.length > 0) v = '(' + v;
+      e.target.value = v;
+    });
+  }
 
   // Resume from localStorage
   const saved = localStorage.getItem('quiz_progress');
