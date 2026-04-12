@@ -780,17 +780,125 @@
     .expert-info .name { font-size:14px; font-weight:700; color:var(--neutral-900); }
     .expert-info .title { font-size:12px; color:var(--neutral-600); line-height:1.4; }
 
-    /* Price display */
-    .product-price {
-      display:flex; align-items:baseline; gap:8px; margin-bottom:12px;
+    /* Bundle benefits (replaces pricing) */
+    .bundle-benefits { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; text-align:left; padding:0 8px; }
+    .benefit-item { font-size:13px; font-weight:600; color:var(--neutral-700); }
+
+    /* Signals card */
+    .signals-card {
+      background:var(--surface); border-radius:var(--radius-md);
+      padding:24px; box-shadow:var(--shadow-md);
+      animation:fadeUp .5s ease .35s both;
     }
-    .price-value {
-      font-size:22px; font-weight:800; color:var(--primary-600);
-      font-family:var(--ff-body);
+    .signals-card h3 {
+      font-family:var(--ff-display); font-size:18px; font-weight:700;
+      color:var(--neutral-900); display:flex; align-items:center; gap:8px;
+      margin-bottom:16px;
     }
-    .price-anchor {
-      font-size:12px; color:var(--neutral-400); font-weight:500;
+    .signals-card h3 svg { color:var(--primary-500); }
+    .signals-list { display:flex; flex-direction:column; gap:10px; }
+    .signal-item {
+      display:flex; align-items:flex-start; gap:12px;
+      padding:12px 14px; background:var(--neutral-50);
+      border-radius:var(--radius-sm); border-left:3px solid var(--primary-400);
     }
+    .signal-item.critical { border-left-color:var(--red-500); background:var(--red-50); }
+    .signal-item.high { border-left-color:var(--amber-500); background:var(--amber-50); }
+    .signal-item.moderate { border-left-color:var(--blue-500); background:var(--blue-50); }
+    .signal-icon {
+      flex-shrink:0; width:24px; height:24px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      background:var(--surface); font-size:12px; font-weight:800;
+    }
+    .signal-content { flex:1; }
+    .signal-title { font-size:13px; font-weight:700; color:var(--neutral-900); margin-bottom:2px; }
+    .signal-text { font-size:13px; line-height:1.5; color:var(--neutral-600); }
+
+    /* Plan card */
+    .plan-card {
+      background:var(--surface); border-radius:var(--radius-md);
+      padding:24px; box-shadow:var(--shadow-md);
+      animation:fadeUp .5s ease .45s both;
+    }
+    .plan-header { text-align:center; margin-bottom:18px; }
+    .plan-card h3 {
+      font-family:var(--ff-display); font-size:18px; font-weight:700;
+      color:var(--neutral-900); display:inline-flex; align-items:center; gap:8px;
+      margin-bottom:4px;
+    }
+    .plan-card h3 svg { color:var(--primary-500); }
+    .plan-subtitle { font-size:13px; color:var(--neutral-600); }
+    .plan-steps { display:flex; flex-direction:column; gap:12px; }
+    .plan-step {
+      display:flex; gap:14px; align-items:flex-start;
+      padding:14px; background:var(--neutral-50);
+      border-radius:var(--radius-sm); border-left:3px solid var(--primary-400);
+    }
+    .plan-day {
+      flex-shrink:0; width:44px; height:44px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:var(--primary-500); color:white; border-radius:var(--radius-sm);
+      font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+      line-height:1;
+    }
+    .plan-day strong { font-size:18px; display:block; margin-bottom:2px; font-family:var(--ff-body); }
+    .plan-content { flex:1; }
+    .plan-title { font-size:14px; font-weight:700; color:var(--neutral-900); margin-bottom:3px; }
+    .plan-desc { font-size:13px; line-height:1.5; color:var(--neutral-600); }
+
+    /* Benchmark card */
+    .benchmark-card {
+      background:linear-gradient(135deg, var(--primary-50), var(--accent-50));
+      border-radius:var(--radius-md);
+      padding:20px 24px; box-shadow:var(--shadow-sm);
+      border:1px solid var(--primary-200);
+      animation:fadeUp .5s ease .25s both;
+    }
+    .benchmark-card h3 {
+      font-family:var(--ff-display); font-size:16px; font-weight:700;
+      color:var(--neutral-900); display:flex; align-items:center; gap:8px;
+      margin-bottom:14px;
+    }
+    .benchmark-card h3 svg { color:var(--primary-500); }
+    .benchmark-content { display:flex; flex-direction:column; gap:10px; }
+    .benchmark-stat {
+      display:flex; align-items:baseline; gap:8px;
+      font-size:14px; line-height:1.5;
+    }
+    .benchmark-pct {
+      font-size:24px; font-weight:800; color:var(--primary-600);
+      font-family:var(--ff-body); min-width:60px;
+    }
+    .benchmark-text { color:var(--neutral-700); flex:1; }
+    .benchmark-text strong { color:var(--neutral-900); }
+
+    /* Letter card */
+    .letter-card {
+      background:var(--surface); border-radius:var(--radius-md);
+      padding:24px; box-shadow:var(--shadow-md);
+      border-left:4px solid var(--primary-500);
+      animation:fadeUp .5s ease .55s both;
+    }
+    .letter-header {
+      display:flex; align-items:center; gap:12px;
+      margin-bottom:14px; padding-bottom:14px;
+      border-bottom:1px solid var(--neutral-200);
+    }
+    .letter-avatar {
+      width:44px; height:44px; border-radius:50%;
+      background:linear-gradient(135deg,var(--primary-400),var(--primary-600));
+      display:flex; align-items:center; justify-content:center;
+      color:white; font-weight:800; font-size:16px; flex-shrink:0;
+    }
+    .letter-title { display:flex; flex-direction:column; }
+    .letter-title strong { font-size:14px; color:var(--neutral-900); font-weight:700; }
+    .letter-title span { font-size:12px; color:var(--neutral-600); }
+    .letter-body {
+      font-size:14px; line-height:1.7; color:var(--neutral-700);
+      font-style:italic;
+    }
+    .letter-body p { margin-bottom:10px; }
+    .letter-body p:last-child { margin-bottom:0; font-style:normal; font-weight:600; color:var(--neutral-900); }
 
     /* Micro-insights */
     .micro-insights {
@@ -1068,13 +1176,40 @@
       <div id="dimScores"></div>
     </div>
 
+    <div class="benchmark-card">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Como Você Se Compara
+      </h3>
+      <div id="benchmarkContent" class="benchmark-content"></div>
+    </div>
+
     <div class="insight-box">
       <h3><span class="insight-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span> O que Seu Raio-X Revela</h3>
       <div class="insight-text" id="insightText"></div>
       <ul class="warning-list" id="warningList"></ul>
     </div>
 
+    <div class="signals-card">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+        Sinais Detectados Nas Suas Respostas
+      </h3>
+      <div id="signalsList" class="signals-list"></div>
+    </div>
+
     <div class="urgency-strip" id="urgencyStrip"></div>
+
+    <div class="plan-card">
+      <div class="plan-header">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Seu Plano de 7 Dias
+        </h3>
+        <p class="plan-subtitle">Começando hoje, na ordem certa pra sua realidade</p>
+      </div>
+      <div id="planSteps" class="plan-steps"></div>
+    </div>
 
     <div class="products-section">
       <div class="products-header">
@@ -1089,10 +1224,10 @@
         <div class="bundle-badge">Oferta Especial — Só Hoje</div>
         <h4 id="bundleTitle">Pack Resgate Completo</h4>
         <p id="bundleDesc" class="bundle-desc"></p>
-        <div class="bundle-pricing">
-          <span class="bundle-original" id="bundleOriginal"></span>
-          <span class="bundle-final" id="bundleFinal"></span>
-          <span class="bundle-savings">Economia de <span id="bundleSavings"></span></span>
+        <div class="bundle-benefits">
+          <div class="benefit-item">✓ Descontos exclusivos no checkout</div>
+          <div class="benefit-item">✓ Acesso imediato e vitalício</div>
+          <div class="benefit-item">✓ Garantia incondicional Hotmart</div>
         </div>
         <a id="bundleLink" href="#" target="_blank" class="btn-product primary" onclick="trackEvent('BundleClicked',{profile:window._quizProfile})">
           Quero o Pack Completo →
@@ -1106,6 +1241,17 @@
         <div class="name">André Luis — CRP 06/161434</div>
         <div class="title">Psicólogo Clínico | Especialista em TDAH<br>Diagnosticado com TDAH aos 28 anos</div>
       </div>
+    </div>
+
+    <div class="letter-card">
+      <div class="letter-header">
+        <div class="letter-avatar">AL</div>
+        <div class="letter-title">
+          <strong>Uma mensagem pessoal pra você</strong>
+          <span>De André Luis, psicólogo CRP 06/161434</span>
+        </div>
+      </div>
+      <div id="letterBody" class="letter-body"></div>
     </div>
 
     <div class="result-footer">
@@ -1274,7 +1420,6 @@ const PRODUCTS = [
     name:'Rotina TDAH Sem Caos',
     desc:'O método criado por quem viveu o TDAH na pele — passo a passo para seu filho ter uma rotina funcional sem gritos e sem repetição.',
     link:'https://pay.hotmart.com/C103477312Y',
-    price:'R$ 37,00',
     tags:['rotina_critica','rotina_fragil','rotina_instavel','escola_crise','escola_dificuldade','conhecimento_zero','conhecimento_teorico'],
     dim:'filho', weight:12
   },
@@ -1283,7 +1428,6 @@ const PRODUCTS = [
     name:'Kit Emergencial Para Mãe Atípica Sobrecarregada',
     desc:'Resgate imediato com o método R.I.T.M.O. — para quando você sente que vai desmoronar e precisa de fôlego AGORA.',
     link:'https://pay.hotmart.com/C101654030B',
-    price:'R$ 27,00',
     tags:['culpa_extrema','culpa_alta','burnout_extremo','burnout_alto','solidao_extrema','solidao_alta'],
     dim:'mae', weight:11
   },
@@ -1292,7 +1436,6 @@ const PRODUCTS = [
     name:'Meu Filho Tem TDAH! E Agora?!',
     desc:'O guia que transforma o medo do diagnóstico em clareza e ação — tudo que você precisa saber sem jargão médico.',
     link:'https://pay.hotmart.com/C101654175J',
-    price:'R$ 19,90',
     tags:['medicacao_medo','diagnostico_processo','conhecimento_zero','conhecimento_teorico','escola_crise','escola_dificuldade'],
     dim:'filho', weight:10
   },
@@ -1301,7 +1444,6 @@ const PRODUCTS = [
     name:'Como Fazer Seu Parceiro Participar de Verdade',
     desc:'O roteiro para transformar resistência em parceria real — sem briga, sem ultimato.',
     link:'https://pay.hotmart.com/V101616698U',
-    price:'R$ 19,90',
     tags:['parceiro_ausente','parceiro_desinformado','parceiro_passivo','conflito_grave','conflito_alto'],
     dim:'familia', weight:10
   },
@@ -1310,7 +1452,6 @@ const PRODUCTS = [
     name:'Família em Transformação — Pack Completo (8 eBooks)',
     desc:'Pack completo com 8 guias: Comunicação Familiar + Limites + Ansiedade + Parceria + Tarefas + Rotina + Emocional + Valores. Tudo que sua família precisa num só lugar.',
     link:'https://pay.hotmart.com/V101617315F',
-    price:'R$ 97,00',
     tags:['rotina_critica','rotina_fragil','culpa_extrema','culpa_alta','burnout_extremo','burnout_alto','parceiro_ausente','parceiro_desinformado','conflito_grave','conflito_alto','rede_julgamento','solidao_extrema','solidao_alta'],
     dim:'familia', weight:9
   },
@@ -1319,7 +1460,6 @@ const PRODUCTS = [
     name:'A Arte da Comunicação Familiar',
     desc:'Troque gritos por diálogo. Menos brigas, mais respeito, uma rotina que flui.',
     link:'https://pay.hotmart.com/F101616239A',
-    price:'R$ 19,90',
     tags:['conflito_grave','conflito_alto','conflito_moderado','emocional_explosivo','emocional_reativo','parceiro_desinformado'],
     dim:'familia', weight:8
   },
@@ -1328,7 +1468,6 @@ const PRODUCTS = [
     name:'Como Ajudar Crianças a Estabelecer Limites',
     desc:'Firmeza com afeto — regras claras que seu filho respeita sem castigos e sem gritos.',
     link:'https://pay.hotmart.com/Y101616449U',
-    price:'R$ 19,90',
     tags:['emocional_explosivo','emocional_reativo','rotina_critica','rotina_fragil','escola_crise'],
     dim:'filho', weight:8
   },
@@ -1337,7 +1476,6 @@ const PRODUCTS = [
     name:'Como Superar a Ansiedade',
     desc:'Técnicas de respiração, mindfulness e mudanças simples para sair do piloto automático.',
     link:'https://pay.hotmart.com/R101616873F',
-    price:'R$ 19,90',
     tags:['burnout_extremo','burnout_alto','burnout_moderado','culpa_extrema','culpa_alta','solidao_extrema'],
     dim:'mae', weight:8
   },
@@ -1346,7 +1484,6 @@ const PRODUCTS = [
     name:'Desintoxique Seu Filho da Dependência Digital',
     desc:'Plano Detox Digital em 21 dias — resgate o sono, o foco e a infância do seu filho.',
     link:'https://pay.hotmart.com/L101654222B',
-    price:'R$ 27,00',
     tags:['rotina_critica','rotina_fragil','rotina_instavel','escola_crise','escola_dificuldade','emocional_explosivo'],
     dim:'filho', weight:7
   },
@@ -1355,7 +1492,6 @@ const PRODUCTS = [
     name:'Conexão Letras e Mentes — TDAH e Amor pela Leitura',
     desc:'Transforme a dificuldade de leitura em paixão com estratégias e recursos interativos.',
     link:'https://pay.hotmart.com/J93818562O',
-    price:'R$ 19,90',
     tags:['escola_crise','escola_dificuldade','escola_suporte','conhecimento_disperso'],
     dim:'filho', weight:7
   },
@@ -1364,7 +1500,6 @@ const PRODUCTS = [
     name:'Envolver a Família nas Tarefas Domésticas',
     desc:'8 passos práticos para dividir o peso da casa — chega de carregar tudo sozinha.',
     link:'https://pay.hotmart.com/P101616927L',
-    price:'R$ 19,90',
     tags:['parceiro_ausente','parceiro_passivo','burnout_extremo','burnout_alto','conflito_alto'],
     dim:'familia', weight:6
   },
@@ -1373,7 +1508,6 @@ const PRODUCTS = [
     name:'Histórias que Conectam',
     desc:'Fortaleça o vínculo com seu filho criando histórias juntos — momentos que viram memórias.',
     link:'https://pay.hotmart.com/V101616784N',
-    price:'R$ 19,90',
     tags:['emocional_moderado','emocional_estavel','solidao_moderada','rotina_ok','escola_suporte'],
     dim:'filho', weight:5
   },
@@ -1382,11 +1516,162 @@ const PRODUCTS = [
     name:'Sementes de Virtude — Caráter Forte e Compassivo',
     desc:'Forme filhos com valores profundos — empatia, coragem e responsabilidade.',
     link:'https://pay.hotmart.com/R101616985Q',
-    price:'R$ 19,90',
     tags:['emocional_moderado','emocional_estavel','rotina_ok','escola_ok','conhecimento_bom'],
     dim:'filho', weight:5
   }
 ];
+
+// ===================================================================
+// TAG SIGNALS — human-readable signals per answer tag
+// ===================================================================
+
+const TAG_SIGNALS = {
+  rotina_critica: {sev:'critical', title:'Rotina sem estrutura', text:'Você indicou que precisa fazer tudo pelo seu filho — sinal de que o sistema de autonomia está travado.'},
+  rotina_fragil: {sev:'high', title:'Rotina frágil', text:'Seu filho tenta mas esquece — falta um sistema visual de apoio que funcione para o cérebro TDAH.'},
+  rotina_instavel: {sev:'moderate', title:'Rotina instável', text:'Funciona com lembretes mas desmorona em imprevistos — falta flexibilidade estrutural.'},
+  escola_crise: {sev:'critical', title:'Escola em crise', text:'Reclamações semanais indicam que a escola precisa de uma intervenção colaborativa urgente.'},
+  escola_dificuldade: {sev:'high', title:'Dificuldade escolar', text:'Notas baixas e falta de foco — sinal de que estratégias de estudo TDAH-específicas são essenciais.'},
+  escola_suporte: {sev:'moderate', title:'Potencial não explorado', text:'A escola entende mas seu filho não rende — falta uma ponte entre casa e escola.'},
+  emocional_explosivo: {sev:'critical', title:'Desregulação emocional grave', text:'Explosões com agressividade indicam que o sistema nervoso do seu filho está sobrecarregado.'},
+  emocional_reativo: {sev:'high', title:'Reatividade emocional', text:'Brigas frequentes mostram dificuldade de processar frustração — habilidade que pode ser ensinada.'},
+  medicacao_medo: {sev:'high', title:'Insegurança sobre medicação', text:'Seu medo é legítimo. Existe informação confiável para tomar decisões informadas.'},
+  diagnostico_processo: {sev:'high', title:'No processo de diagnóstico', text:'Você está na fase mais angustiante. Ter um guia faz diferença enorme.'},
+  culpa_extrema: {sev:'critical', title:'Culpa crônica', text:'Dormir todas as noites pensando que falhou é um sinal de auto-cobrança insustentável.'},
+  culpa_alta: {sev:'high', title:'Voz interna crítica', text:'Quase todo dia carregando culpa — essa voz sabota suas decisões diárias.'},
+  burnout_extremo: {sev:'critical', title:'Sinais de burnout materno', text:'Acordar cansada e dormir exausta são sinais clássicos de esgotamento materno.'},
+  burnout_alto: {sev:'high', title:'Vivendo no automático', text:'Funcionar sem viver é o estágio antes do colapso. Precisa intervir agora.'},
+  conhecimento_zero: {sev:'high', title:'Falta de informação confiável', text:'Google traz informação fragmentada — você precisa de um método organizado.'},
+  conhecimento_teorico: {sev:'moderate', title:'Sabe na teoria, trava na prática', text:'O salto teoria-prática é o maior gargalo. Você precisa de aplicação guiada.'},
+  solidao_extrema: {sev:'critical', title:'Isolamento emocional total', text:'Chorar sozinha sem ter para quem ligar é um dos sinais mais alarmantes.'},
+  solidao_alta: {sev:'high', title:'Cansaço de ser julgada', text:'Parou de pedir ajuda porque foi julgada — isolamento como mecanismo de defesa.'},
+  parceiro_ausente: {sev:'critical', title:'Sem parceria real', text:'Carregar tudo sozinha multiplica a sobrecarga mental por 3.'},
+  parceiro_desinformado: {sev:'high', title:'Parceiro tentando mas falhando', text:'Boa intenção sem informação acaba criando mais conflito.'},
+  parceiro_passivo: {sev:'moderate', title:'Carga mental 100% sua', text:'Parceiro ajuda quando pede mas a coordenação é toda sua — isso esgota.'},
+  conflito_grave: {sev:'critical', title:'Casa em tensão constante', text:'Conflitos fora de controle indicam que o sistema familiar precisa de reset.'},
+  conflito_alto: {sev:'high', title:'Brigas frequentes', text:'Brigas entre todos da casa mostram que ninguém mais se entende — comunicação quebrou.'},
+  rede_julgamento: {sev:'high', title:'Família que julga', text:'"Falta de chinelo" e outros comentários estão minando sua confiança como mãe.'},
+  rede_neutra: {sev:'moderate', title:'Silêncio que dói', text:'Olhares e silêncios são mais dolorosos que palavras — isolamento velado.'},
+  financeiro_critico: {sev:'critical', title:'Pressão financeira severa', text:'Escolher entre tratar e pagar contas é uma das dores mais paralisantes.'},
+  financeiro_apertado: {sev:'high', title:'Orçamento no limite', text:'Apertar em tudo sem sobrar pra si mesma é estratégia que não se sustenta.'},
+  mae_solo: {sev:'critical', title:'Maternagem solo', text:'Como mãe solo, cada decisão tem o dobro do peso. Precisa de sistemas, não mais esforço.'}
+};
+
+// ===================================================================
+// 7-DAY PLAN TEMPLATES per profile
+// ===================================================================
+
+const PLAN_TEMPLATES = {
+  guerreira_exausta: [
+    {day:1, title:'Diagnóstico do colapso', desc:'Reconhecer onde você está. Hoje você só precisa aceitar o que o raio-x mostrou. Sem julgamento.'},
+    {day:2, title:'Máscara de oxigênio', desc:'Escolher 1 única ferramenta de auto-cuidado que você vai aplicar. Só 1. Pequena. Inegociável.'},
+    {day:3, title:'Ritual de descompressão', desc:'15 minutos à noite, sozinha, sem celular. Isso é estratégia, não luxo.'},
+    {day:4, title:'Mapeamento de gatilhos', desc:'Anotar os 3 momentos do dia que mais te esgotam — são seus pontos de intervenção.'},
+    {day:5, title:'Pedido de ajuda específico', desc:'Identificar 1 pessoa e fazer 1 pedido concreto. Não "preciso de ajuda" — algo específico.'},
+    {day:6, title:'Pausa estratégica', desc:'30 minutos só seus. Sem culpa. Marca na agenda como compromisso médico.'},
+    {day:7, title:'Revisão e próximo ciclo', desc:'O que funcionou? O que precisa ajustar? Começar a planejar a semana 2 com mais clareza.'}
+  ],
+  mae_solitaria: [
+    {day:1, title:'Aceitar a realidade da solidão', desc:'Você não falhou. O sistema é que não foi feito para uma pessoa carregar sozinha.'},
+    {day:2, title:'Mapear a rede possível', desc:'Listar 5 pessoas — qualquer que seja a relação — que poderiam dar UM tipo de apoio específico.'},
+    {day:3, title:'Primeiro pedido concreto', desc:'Fazer 1 pedido pequeno e específico para 1 pessoa da sua lista. Mesmo que pareça difícil.'},
+    {day:4, title:'Sistema antes de esforço', desc:'Identificar 1 tarefa repetitiva e criar um sistema (lista, lembrete, automação) que reduza esforço.'},
+    {day:5, title:'Comunidade virtual', desc:'Encontrar 1 grupo (Instagram, WhatsApp, Facebook) de mães atípicas. Só observar primeiro.'},
+    {day:6, title:'Auto-validação diária', desc:'Escrever 3 coisas que você fez bem hoje. Por menores que pareçam.'},
+    {day:7, title:'Definição de limites', desc:'Decidir 1 coisa que você vai parar de fazer. Liberar espaço mental é mais importante que adicionar.'}
+  ],
+  perdida_respostas: [
+    {day:1, title:'Parar de pesquisar aleatório', desc:'Hoje você desistiu do Google. Confusão é o oposto de clareza.'},
+    {day:2, title:'Escolher 1 fonte única', desc:'Selecionar 1 método, 1 livro, 1 profissional para seguir. Foco vs dispersão.'},
+    {day:3, title:'Aplicar 1 estratégia simples', desc:'Pegar 1 dica específica e aplicar por 24h. Sem misturar com outras.'},
+    {day:4, title:'Observar resultados', desc:'O que mudou? Mesmo o menor sinal é dado importante.'},
+    {day:5, title:'Ajustar e repetir', desc:'Refinar a estratégia baseado no que observou. Pequenos ajustes, não revolução.'},
+    {day:6, title:'Adicionar segunda camada', desc:'Adicionar 1 segunda estratégia. Sempre pequenas, sempre testadas.'},
+    {day:7, title:'Mapear o que funciona', desc:'Documentar o que funcionou. Você está construindo SEU método personalizado.'}
+  ],
+  lar_em_guerra: [
+    {day:1, title:'Reconhecer o sistema', desc:'O problema não é seu filho — é o sistema familiar todo. Hoje você só reconhece isso.'},
+    {day:2, title:'Identificar 1 conflito recorrente', desc:'Qual briga se repete sempre? Esse é seu primeiro alvo.'},
+    {day:3, title:'Conversa de aliado', desc:'Falar com a pessoa-chave da casa (parceiro, irmão, avó) — sem cobrar, criando aliança.'},
+    {day:4, title:'Acordo familiar mínimo', desc:'Estabelecer 1 regra simples que todos concordam. Só 1. Para criar precedente.'},
+    {day:5, title:'Reunião familiar curta', desc:'15 minutos com todos. Falar sobre como cada um está. Escutar mais que falar.'},
+    {day:6, title:'Reforço positivo', desc:'Reconhecer publicamente algo bom em cada membro da família. Reverter o ciclo de crítica.'},
+    {day:7, title:'Avaliação do sistema', desc:'O que mudou no clima da casa? Até microajustes contam.'}
+  ],
+  filho_vulcao: [
+    {day:1, title:'Mapeamento das crises', desc:'Anotar TODA crise do dia: horário, gatilho, intensidade, duração. Só observar.'},
+    {day:2, title:'Identificar padrões', desc:'Olhar o mapa de ontem. Existe horário, alimento, contexto que se repete?'},
+    {day:3, title:'Antecipação preventiva', desc:'Antes do horário crítico, fazer algo diferente: snack, pausa, ar livre. Testar.'},
+    {day:4, title:'Cantinho da calma', desc:'Criar com seu filho um espaço onde ele pode ir quando estiver desregulado. Sem castigo.'},
+    {day:5, title:'Linguagem da emoção', desc:'Ensinar 3 palavras: frustrado, sobrecarregado, irritado. Você nomeia, ele aprende.'},
+    {day:6, title:'Validação primeiro', desc:'Antes de corrigir, validar: "Eu vejo que você está frustrado". Só depois, redirecionar.'},
+    {day:7, title:'Celebrar pequenas vitórias', desc:'Notar quando ele se autorregulou — mesmo que pouco. Reforçar o que deu certo.'}
+  ],
+  equilibrista: [
+    {day:1, title:'Auditoria de prioridades', desc:'Listar tudo que você faz pelo seu filho/família. Marcar o que realmente move o ponteiro.'},
+    {day:2, title:'Eliminar 1 coisa', desc:'Escolher 1 atividade da lista que pode ser eliminada ou simplificada. Liberar carga.'},
+    {day:3, title:'Sistematizar 1 rotina', desc:'Pegar 1 momento do dia (ex: tarde) e criar um mini-sistema visual com seu filho.'},
+    {day:4, title:'Self check-in', desc:'Pausa de 5min para perguntar: "Como eu estou de verdade?". Honesta.'},
+    {day:5, title:'Conexão com filho', desc:'15min de qualidade total com seu filho. Sem celular, sem multitarefa. Só ele e você.'},
+    {day:6, title:'Otimização de 1 conflito', desc:'Identificar 1 fricção recorrente e testar 1 abordagem nova.'},
+    {day:7, title:'Plano de manutenção', desc:'Definir o que vai manter e o que vai mudar na semana 2. Avançar com intenção.'}
+  ],
+  consciente: [
+    {day:1, title:'Definir 1 área de evolução', desc:'Você já tem base. Hoje escolha UMA área específica para aprofundar nos próximos 7 dias.'},
+    {day:2, title:'Estudar método profundo', desc:'Dedicar 30 min para aprender 1 conceito novo aplicável à área escolhida.'},
+    {day:3, title:'Aplicar e observar', desc:'Implementar o que aprendeu. Observar com olhos de pesquisadora, não de auto-julgamento.'},
+    {day:4, title:'Ajuste fino', desc:'Pequenos refinamentos baseados na realidade do seu filho.'},
+    {day:5, title:'Conectar com outras mães', desc:'Trocar experiências com 1 outra mãe. Você aprende E ensina.'},
+    {day:6, title:'Documentar aprendizado', desc:'Anotar o que funcionou. Você está construindo um repertório que serve toda vida.'},
+    {day:7, title:'Planejar próxima área', desc:'O que você quer aprofundar na semana 2? Crescimento sustentável se faz em camadas.'}
+  ]
+};
+
+// ===================================================================
+// ANDRE LETTERS per profile
+// ===================================================================
+
+const ANDRE_LETTERS = {
+  guerreira_exausta: `<p>Mãe, eu preciso ser direto contigo.</p>
+    <p>Como psicólogo, eu vejo todos os dias mães que chegam exatamente onde você está. E tenho uma notícia que pode te assustar — mas é a verdade: <strong>você não vai conseguir continuar assim por muito mais tempo</strong>. Não porque você é fraca. Mas porque nenhum ser humano foi feito pra carregar isso sozinha por tempo indeterminado.</p>
+    <p>A boa notícia? O ponto onde você está tem caminho de saída. Eu conheço esse caminho porque eu vivi o TDAH na pele e ajudei centenas de mães a fazerem essa travessia.</p>
+    <p>Não espera "estar pronta". A coragem não vem antes — vem depois do primeiro passo.</p>
+    <p>— André</p>`,
+  mae_solitaria: `<p>Pra você que carrega tudo sozinha:</p>
+    <p>Eu queria que você soubesse que <strong>essa solidão não é culpa sua</strong>. O sistema falhou em criar redes de apoio reais para mães atípicas. Você tentou pedir ajuda e recebeu julgamento. Isolou-se como mecanismo de defesa. Faz total sentido.</p>
+    <p>Mas eu também preciso te dizer: <strong>você não precisa virar essa página sozinha</strong>. Existe um caminho onde você constrói um sistema de apoio (mesmo sendo mãe solo) — não baseado em sorte, mas em estratégia.</p>
+    <p>Você já tem a força. Falta você ter o mapa.</p>
+    <p>— André</p>`,
+  perdida_respostas: `<p>Mãe,</p>
+    <p>Você não está perdida porque não se esforça. Você está perdida porque <strong>não existe um norte claro</strong> no oceano de informações contraditórias sobre TDAH na internet.</p>
+    <p>Cada profissional fala uma coisa. Cada post contradiz outro. Você sai mais confusa do que entrou. Eu sei porque eu vejo isso todos os dias.</p>
+    <p>O que você precisa não é mais informação — é MENOS. Um método. Um sistema. Uma sequência testada. <strong>Clareza é o oposto de sobrecarga</strong>.</p>
+    <p>Você já sabe muita coisa. Agora precisa organizar.</p>
+    <p>— André</p>`,
+  lar_em_guerra: `<p>Mãe,</p>
+    <p>Eu sei que parece que o TDAH do seu filho destruiu o clima da casa. Mas como psicólogo eu te digo: <strong>o TDAH não criou os conflitos — ele apenas amplificou os que já existiam</strong>.</p>
+    <p>Isso é libertador, porque significa que não é culpa do seu filho. E significa que o caminho passa por reorganizar o sistema familiar como um todo, não por "consertar" uma criança.</p>
+    <p>A família é o sistema operacional. Quando ele está alinhado, qualquer estratégia funciona. Quando está desalinhado, nada funciona.</p>
+    <p>Você não precisa de mais técnicas. Precisa de uma nova estrutura.</p>
+    <p>— André</p>`,
+  filho_vulcao: `<p>Mãe,</p>
+    <p>Seu filho não é desobediente nem mal-educado. <strong>O cérebro dele funciona em outro sistema operacional</strong> — e ele está tão perdido quanto você, só que sem palavras pra expressar.</p>
+    <p>Cada explosão é um pedido de socorro disfarçado. Cada birra é o sistema nervoso dele te dizendo: "eu não consigo lidar com isso sozinho". Castigo não educa o cérebro TDAH — só traumatiza.</p>
+    <p>Existem ferramentas específicas que falam a linguagem dele. Quando você aprender essas ferramentas, vai descobrir um filho que você achou que tinha perdido.</p>
+    <p>Ele está esperando você.</p>
+    <p>— André</p>`,
+  equilibrista: `<p>Mãe,</p>
+    <p>Você está no momento mais importante: <strong>não está em crise, mas também não está no controle</strong>. E exatamente aqui que se decide se você vai pro colapso ou pra prosperidade.</p>
+    <p>A maioria das mães que viram o jogo agem AGORA — quando ainda têm energia para implementar mudanças. Esperar a crise chegar é estratégia de quem já desistiu.</p>
+    <p>Você não precisa de uma revolução. Precisa de pequenos sistemas certos, na ordem certa.</p>
+    <p>Você está a 2 semanas de uma realidade muito diferente.</p>
+    <p>— André</p>`,
+  consciente: `<p>Mãe,</p>
+    <p>Você está num lugar bonito: <strong>você já fez o trabalho da consciência</strong>. Sabe sobre TDAH, já tem ferramentas, já construiu uma base. Isso é raro e merece reconhecimento.</p>
+    <p>Mas você sabe que pode ir mais fundo. Existe diferença entre "saber sobre" e "dominar". E é isso que você está buscando — a maestria.</p>
+    <p>O próximo nível não é mais informação. É aprofundamento, refinamento, otimização do que já funciona.</p>
+    <p>Você está pronta para evoluir.</p>
+    <p>— André</p>`
+};
 
 // ===================================================================
 // PROFILES (expanded)
@@ -1746,6 +2031,68 @@ function showResult(name,result) {
 
   setTimeout(()=>{document.querySelectorAll('.dim-fill').forEach(el=>{el.style.width=el.dataset.w;});},400);
 
+  // Benchmark calculation
+  const totalScore = result.dims.filho + result.dims.mae + result.dims.familia;
+  const maxScore = 48;
+  const userPct = Math.round((totalScore / maxScore) * 100);
+  let percentile;
+  if(userPct >= 80) percentile = 92;
+  else if(userPct >= 65) percentile = 78;
+  else if(userPct >= 50) percentile = 60;
+  else if(userPct >= 35) percentile = 40;
+  else percentile = 22;
+  const worstDim = Object.keys(result.dims).reduce((a,b) => result.dims[a] > result.dims[b] ? a : b);
+  const dimNames = {filho:'a sobrecarga com o filho', mae:'o esgotamento materno', familia:'os conflitos familiares'};
+  document.getElementById('benchmarkContent').innerHTML = `
+    <div class="benchmark-stat">
+      <span class="benchmark-pct">${percentile}%</span>
+      <span class="benchmark-text">das mães que fizeram esse raio-x apresentam <strong>menos sinais</strong> que você. Sua situação pede atenção especial.</span>
+    </div>
+    <div class="benchmark-stat">
+      <span class="benchmark-pct">3x</span>
+      <span class="benchmark-text">é a probabilidade de uma mãe no seu nível desenvolver burnout sem intervenção estruturada.</span>
+    </div>
+    <div class="benchmark-stat">
+      <span class="benchmark-pct">${100-percentile}%</span>
+      <span class="benchmark-text">das mães que estavam <strong>onde você está</strong> e seguiram um método organizado, reportaram melhora significativa em 8 semanas.</span>
+    </div>
+    <p style="font-size:12px;color:var(--neutral-600);margin-top:6px;font-style:italic">Sua dimensão mais crítica: ${dimNames[worstDim]}.</p>
+  `;
+
+  // Render detected signals
+  const signalsHtml = (result.tags||[])
+    .filter((t,i,arr) => arr.indexOf(t) === i)
+    .map(t => TAG_SIGNALS[t])
+    .filter(s => s)
+    .sort((a,b) => {
+      const order = {critical:0,high:1,moderate:2};
+      return order[a.sev] - order[b.sev];
+    })
+    .slice(0, 8)
+    .map(s => `<div class="signal-item ${s.sev}">
+      <span class="signal-icon">${s.sev === 'critical' ? '!' : s.sev === 'high' ? '▲' : '◆'}</span>
+      <div class="signal-content">
+        <div class="signal-title">${s.title}</div>
+        <div class="signal-text">${s.text}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('signalsList').innerHTML = signalsHtml || '<p style="color:var(--neutral-400);font-size:13px">Sem sinais críticos detectados.</p>';
+
+  // Render 7-day plan
+  const planTemplate = PLAN_TEMPLATES[result.profile] || PLAN_TEMPLATES.consciente;
+  document.getElementById('planSteps').innerHTML = planTemplate.map(s => `
+    <div class="plan-step">
+      <div class="plan-day">DIA <strong>${s.day}</strong></div>
+      <div class="plan-content">
+        <div class="plan-title">${s.title}</div>
+        <div class="plan-desc">${s.desc}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Render Andre's letter
+  document.getElementById('letterBody').innerHTML = ANDRE_LETTERS[result.profile] || ANDRE_LETTERS.consciente;
+
   // Insight with micro-variations based on specific tags
   let insightHtml = prof.getInsight ? prof.getInsight(result.dims) : prof.insight;
   const tags = result.tags;
@@ -1801,7 +2148,6 @@ function showResult(name,result) {
       <div class="product-rank"><span class="rank-num">${i+1}</span><span class="product-tag">${dimLabels[p.dim]||''}</span></div>
       <h4>${p.name}</h4>
       <p class="product-desc">${p.desc}</p>
-      <div class="product-price"><span class="price-value">${p.price}</span><span class="price-anchor">Menos que uma pizza</span></div>
       <div class="product-match"><div class="match-bar-track"><div class="match-bar-fill" style="width:${p.matchPct}%"></div></div><span class="match-pct">${p.matchPct}%</span></div>
       <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1}})">Quero Resolver Isso →</a>
     </div>`;
@@ -1814,19 +2160,8 @@ function showResult(name,result) {
     bundleEl.style.display = 'block';
 
     const bundleProducts = result.products;
-    const totalOriginal = bundleProducts.reduce((sum, p) => {
-      const priceNum = parseFloat(p.price.replace('R$ ','').replace(',','.'));
-      return sum + priceNum;
-    }, 0);
-    const discount = 0.30;
-    const bundleFinal = totalOriginal * (1 - discount);
-    const savings = totalOriginal - bundleFinal;
-
-    document.getElementById('bundleTitle').textContent = 'Pack Resgate — ' + bundleProducts.length + ' Guias';
-    document.getElementById('bundleDesc').textContent = bundleProducts.map(p => p.name).join(' + ');
-    document.getElementById('bundleOriginal').textContent = 'De R$ ' + totalOriginal.toFixed(2).replace('.',',');
-    document.getElementById('bundleFinal').textContent = 'R$ ' + bundleFinal.toFixed(2).replace('.',',');
-    document.getElementById('bundleSavings').textContent = 'R$ ' + savings.toFixed(2).replace('.',',');
+    document.getElementById('bundleTitle').textContent = 'Pack Resgate — ' + bundleProducts.length + ' Guias Selecionados';
+    document.getElementById('bundleDesc').textContent = 'Pack com ' + bundleProducts.length + ' guias selecionados especialmente para o seu perfil — ' + bundleProducts.map(p => p.name).join(' • ');
     document.getElementById('bundleLink').href = bundleProducts[0].link;
   }
 
