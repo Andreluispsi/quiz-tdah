@@ -1251,27 +1251,6 @@
       <div id="productCards"></div>
     </div>
 
-    <div class="bundle-section" id="bundleSection" style="display:none">
-      <div class="bundle-card">
-        <div class="bundle-badge">Oferta Especial Pra Você</div>
-        <h4 id="bundleTitle">Pack Resgate Completo</h4>
-        <p id="bundleDesc" class="bundle-desc"></p>
-        <div class="bundle-pricing">
-          <span class="bundle-original" id="bundleOriginal"></span>
-          <span class="bundle-final" id="bundleFinal"></span>
-          <span class="bundle-savings">Economia: <span id="bundleSavings"></span></span>
-        </div>
-        <div class="bundle-benefits">
-          <div class="benefit-item">✓ Acesso imediato e vitalício</div>
-          <div class="benefit-item">✓ Garantia incondicional Hotmart de 7 dias</div>
-          <div class="benefit-item">✓ Suporte direto da equipe TDAH com André</div>
-        </div>
-        <a id="bundleLink" href="#" target="_blank" class="btn-product primary" onclick="trackEvent('BundleClicked',{profile:window._quizProfile})">
-          Quero o Pack Completo →
-        </a>
-      </div>
-    </div>
-
     <div class="expert-stamp">
       <div class="expert-avatar">AL</div>
       <div class="expert-info">
@@ -2206,30 +2185,6 @@ function showResult(name,result) {
       <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1},price:${p.priceNum}})">Quero por ${p.price} →</a>
     </div>`;
   }).join('');
-
-  // Bundle offer for severe profiles - REAL price calculation with 30% discount
-  const severeProfiles = ['guerreira_exausta','mae_solitaria','lar_em_guerra','filho_vulcao'];
-  if(severeProfiles.includes(result.profile)) {
-    const bundleEl = document.getElementById('bundleSection');
-    bundleEl.style.display = 'block';
-
-    const bundleProducts = result.products;
-    const totalOriginal = bundleProducts.reduce((sum,p) => sum + (p.priceNum || 0), 0);
-    const discount = 0.30; // 30% off
-    const bundleFinal = totalOriginal * (1 - discount);
-    const savings = totalOriginal - bundleFinal;
-    const fmt = (n) => 'R$ ' + n.toFixed(2).replace('.',',');
-
-    document.getElementById('bundleTitle').textContent = 'Pack Resgate Completo — ' + bundleProducts.length + ' Guias';
-    document.getElementById('bundleDesc').innerHTML = bundleProducts.map(p => '✓ ' + p.name + ' <span style="color:var(--neutral-400);font-weight:500">(' + p.price + ')</span>').join('<br>');
-    const orig = document.getElementById('bundleOriginal');
-    const fin = document.getElementById('bundleFinal');
-    const sav = document.getElementById('bundleSavings');
-    if(orig) { orig.style.display = 'inline'; orig.textContent = 'De ' + fmt(totalOriginal); }
-    if(fin) { fin.style.display = 'inline'; fin.textContent = fmt(bundleFinal); }
-    if(sav) { sav.style.display = 'inline'; sav.textContent = fmt(savings) + ' (30% OFF)'; }
-    document.getElementById('bundleLink').href = bundleProducts[0].link;
-  }
 
   trackEvent('ResultViewed',{profile:result.profile});
 }
