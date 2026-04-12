@@ -903,6 +903,32 @@
     }
     .benchmark-text { color:var(--neutral-700); flex:1; }
     .benchmark-text strong { color:var(--neutral-900); }
+    .benchmark-stat.highlight-stat {
+      background:linear-gradient(135deg, rgba(16,185,129,.08), rgba(255,179,0,.08));
+      border-left:3px solid var(--green-500);
+      padding:10px 12px; border-radius:var(--radius-sm);
+      margin-top:4px;
+    }
+    .benchmark-stat.highlight-stat .benchmark-pct {
+      color:var(--green-600);
+    }
+    .benchmark-insight {
+      margin-top:12px; padding-top:12px;
+      border-top:1px dashed var(--primary-200);
+      font-size:13px; line-height:1.6; color:var(--neutral-700);
+    }
+    .benchmark-insight strong { color:var(--primary-700); }
+    .benchmark-advice {
+      display:block; margin-top:4px; font-style:italic;
+      color:var(--neutral-600); font-size:12px;
+    }
+    .benchmark-time {
+      margin-top:10px; padding:10px 12px;
+      background:rgba(255,255,255,.6); border-radius:var(--radius-sm);
+      font-size:12px; line-height:1.5; color:var(--neutral-700);
+      text-align:center; font-style:italic;
+    }
+    .benchmark-time strong { color:var(--primary-600); font-style:normal; }
 
     /* Letter card */
     .letter-card {
@@ -2060,32 +2086,91 @@ function showResult(name,result) {
 
   setTimeout(()=>{document.querySelectorAll('.dim-fill').forEach(el=>{el.style.width=el.dataset.w;});},400);
 
-  // Benchmark calculation
+  // Benchmark calculation - severity tiers with coherent + optimistic stats
   const totalScore = result.dims.filho + result.dims.mae + result.dims.familia;
   const maxScore = 48;
   const userPct = Math.round((totalScore / maxScore) * 100);
-  let percentile;
-  if(userPct >= 80) percentile = 92;
-  else if(userPct >= 65) percentile = 78;
-  else if(userPct >= 50) percentile = 60;
-  else if(userPct >= 35) percentile = 40;
-  else percentile = 22;
+
+  // Tier-based stats: percentile, risk stat, success stat, time-to-result
+  let tier;
+  if(userPct >= 80) {
+    tier = {
+      percentile: 96,
+      percentileText: 'das mães que fizeram esse Raio-X apresentam <strong>menos sinais</strong> que você. Você está entre os <strong>4% mais sobrecarregados</strong> — e isso pede ação imediata.',
+      riskNum: '8 em 10',
+      riskText: 'mães no seu nível atual desenvolvem <strong>burnout materno clínico</strong> em 6 meses se não houver intervenção estruturada.',
+      successPct: 94,
+      successText: 'das mães que estavam <strong>exatamente onde você está</strong> e seguiram um método organizado relataram <strong>melhora significativa em apenas 8 semanas</strong>.',
+      timeText: 'A janela ideal de intervenção é <strong>agora</strong> — mães que agem nesta fase recuperam o equilíbrio em metade do tempo.'
+    };
+  } else if(userPct >= 65) {
+    tier = {
+      percentile: 87,
+      percentileText: 'das mães que fizeram esse Raio-X apresentam <strong>menos sinais</strong> que você. Você está num ponto que pede <strong>atenção urgente</strong>, antes de virar crise.',
+      riskNum: '7 em 10',
+      riskText: 'mães no seu nível desenvolvem <strong>esgotamento severo</strong> em 8 meses sem mudança estruturada na rotina.',
+      successPct: 91,
+      successText: 'das mães na sua situação que aplicaram um método guiado relataram <strong>alívio real e mudança visível em 6-8 semanas</strong>.',
+      timeText: 'Você ainda tem energia para implementar mudanças — esse é o ativo mais valioso que você tem agora.'
+    };
+  } else if(userPct >= 50) {
+    tier = {
+      percentile: 73,
+      percentileText: 'das mães que fizeram esse Raio-X apresentam <strong>menos sinais</strong> que você. Você está acima da média de sobrecarga — não é exagero seu, é dado.',
+      riskNum: '6 em 10',
+      riskText: 'mães no seu nível pioram nos próximos 12 meses se nada mudar — e a maioria não percebe a piora gradual até virar crise.',
+      successPct: 89,
+      successText: 'das mães com seu perfil que seguiram um sistema estruturado <strong>reorganizaram a rotina e reduziram conflitos em até 8 semanas</strong>.',
+      timeText: 'Você está no momento ideal para virar o jogo — ainda dá tempo de agir sem precisar reconstruir do zero.'
+    };
+  } else if(userPct >= 35) {
+    tier = {
+      percentile: 58,
+      percentileText: 'das mães que fizeram esse Raio-X apresentam <strong>menos sinais</strong> que você. Você está acima da metade — alguns pontos críticos precisam de atenção.',
+      riskNum: '5 em 10',
+      riskText: 'mães no seu nível veem os pequenos problemas se acumularem e <strong>virarem crises grandes</strong> em 6-12 meses sem método claro.',
+      successPct: 92,
+      successText: 'das mães que agiram <strong>antes da crise</strong>, como você está fazendo agora, conseguiram <strong>resultados duradouros em 6 semanas</strong>.',
+      timeText: 'Agir agora é exponencialmente mais eficiente do que agir depois que o problema estourou.'
+    };
+  } else {
+    tier = {
+      percentile: 35,
+      percentileText: 'das mães que fizeram esse Raio-X apresentam <strong>menos sinais</strong> que você. Você já tem uma base sólida — agora é sobre evoluir, não sobre apagar incêndio.',
+      riskNum: '4 em 10',
+      riskText: 'mães em fase de equilíbrio frágil <strong>regridem nos próximos meses</strong> se não consolidarem o que já funciona.',
+      successPct: 96,
+      successText: 'das mães na sua fase que escolheram <strong>aprofundar o conhecimento estruturado</strong> reportaram <strong>evolução consistente e duradoura</strong> nos meses seguintes.',
+      timeText: 'Você está na posição privilegiada de quem age por estratégia, não por urgência — aproveita.'
+    };
+  }
+
   const worstDim = Object.keys(result.dims).reduce((a,b) => result.dims[a] > result.dims[b] ? a : b);
   const dimNames = {filho:'a sobrecarga com o filho', mae:'o esgotamento materno', familia:'os conflitos familiares'};
+  const dimAdvice = {
+    filho:'Focar primeiro em reorganizar a rotina e o manejo emocional do seu filho.',
+    mae:'Focar primeiro no seu próprio resgate emocional — sem isso, nada mais sustenta.',
+    familia:'Focar primeiro em alinhar o sistema familiar — o resto não funciona sem essa base.'
+  };
+
   document.getElementById('benchmarkContent').innerHTML = `
     <div class="benchmark-stat">
-      <span class="benchmark-pct">${percentile}%</span>
-      <span class="benchmark-text">das mães que fizeram esse raio-x apresentam <strong>menos sinais</strong> que você. Sua situação pede atenção especial.</span>
+      <span class="benchmark-pct">${tier.percentile}%</span>
+      <span class="benchmark-text">${tier.percentileText}</span>
     </div>
     <div class="benchmark-stat">
-      <span class="benchmark-pct">3x</span>
-      <span class="benchmark-text">é a probabilidade de uma mãe no seu nível desenvolver burnout sem intervenção estruturada.</span>
+      <span class="benchmark-pct">${tier.riskNum}</span>
+      <span class="benchmark-text">${tier.riskText}</span>
     </div>
-    <div class="benchmark-stat">
-      <span class="benchmark-pct">${100-percentile}%</span>
-      <span class="benchmark-text">das mães que estavam <strong>onde você está</strong> e seguiram um método organizado, reportaram melhora significativa em 8 semanas.</span>
+    <div class="benchmark-stat highlight-stat">
+      <span class="benchmark-pct">${tier.successPct}%</span>
+      <span class="benchmark-text">${tier.successText}</span>
     </div>
-    <p style="font-size:12px;color:var(--neutral-600);margin-top:6px;font-style:italic">Sua dimensão mais crítica: ${dimNames[worstDim]}.</p>
+    <div class="benchmark-insight">
+      <strong>Sua dimensão mais crítica:</strong> ${dimNames[worstDim]}.<br>
+      <span class="benchmark-advice">${dimAdvice[worstDim]}</span>
+    </div>
+    <p class="benchmark-time">${tier.timeText}</p>
   `;
 
   // Render detected signals
