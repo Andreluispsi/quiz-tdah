@@ -2,12 +2,14 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Raio-X da Mãe TDAH — Descubra Sua Realidade em 3 Minutos</title>
   <meta name="description" content="12 perguntas que vão revelar o que ninguém te conta sobre sua realidade como mãe de filho com TDAH — e o caminho exato para transformá-la.">
   <meta property="og:title" content="Raio-X da Mãe de Filho com TDAH">
   <meta property="og:description" content="Descubra em 3 minutos o que está travando você e seu filho — e o plano personalizado para virar o jogo.">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://quiz.rotinatdahsemcaos.online/og-image.jpg">
+  <meta property="og:url" content="https://quiz.rotinatdahsemcaos.online/">
 
   <!-- Supabase -->
   <script>
@@ -46,6 +48,7 @@
     @keyframes checkmark { from{stroke-dashoffset:24} to{stroke-dashoffset:0} }
     @keyframes barGrow { from{width:0} }
     @keyframes countUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes spin { to{transform:rotate(360deg)} }
 
     :root {
       --ff-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
@@ -103,6 +106,8 @@
       min-height: 100dvh;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      touch-action: manipulation;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
 
     /* === BG PATTERN === */
@@ -132,6 +137,7 @@
     /* === PROGRESS === */
     .progress-wrap {
       padding: 12px 0 20px;
+      padding-top: calc(12px + env(safe-area-inset-top, 0px));
       position: sticky;
       top: 0;
       z-index: 20;
@@ -148,6 +154,14 @@
     /* === SCREENS === */
     .screen { display:none; flex:1; flex-direction:column; }
     .screen.active { display:flex; animation:fadeUp .5s ease; }
+
+    /* === FOCUS VISIBLE === */
+    .q-opt:focus-visible, .btn-start:focus-visible, .btn-submit:focus-visible,
+    .btn-product:focus-visible, .btn-share:focus-visible,
+    .lead-form input:focus-visible {
+      outline: 3px solid var(--primary-400);
+      outline-offset: 2px;
+    }
 
     /* ================================
        WELCOME
@@ -175,9 +189,10 @@
       background: linear-gradient(135deg, var(--primary-100), var(--accent-100));
       animation: pulse 3s ease infinite;
     }
-    .welcome-visual span {
+    .welcome-icon {
       position: relative;
-      font-size: 56px;
+      width: 56px;
+      height: 56px;
       animation: float 4s ease-in-out infinite;
     }
     .welcome h1 {
@@ -287,6 +302,7 @@
       line-height: 1.35;
       color: var(--neutral-900);
       letter-spacing: -0.01em;
+      margin: 0;
     }
 
     .q-options { display:flex; flex-direction:column; gap:10px; }
@@ -306,6 +322,7 @@
       box-shadow:var(--shadow-sm);
       position:relative;
       overflow:hidden;
+      font-family:var(--ff-body);
     }
     .q-opt::before {
       content:'';
@@ -339,6 +356,27 @@
     }
     .q-opt-text { position:relative; z-index:1; }
 
+    /* Back Button */
+    .btn-back {
+      display:inline-flex; align-items:center; gap:6px;
+      background:none; border:none; color:var(--neutral-600);
+      font-size:13px; font-weight:600; font-family:var(--ff-body);
+      cursor:pointer; padding:8px 12px; border-radius:var(--radius-full);
+      transition:all .2s; -webkit-tap-highlight-color:transparent;
+      margin-bottom:4px;
+    }
+    .btn-back:hover { color:var(--primary-500); background:var(--primary-50); }
+
+    /* Question Transition */
+    .q-transition {
+      background:linear-gradient(135deg, var(--primary-50), var(--accent-50));
+      border-radius:var(--radius-sm); padding:12px 16px;
+      font-size:14px; color:var(--neutral-700); line-height:1.5;
+      animation:fadeUp .4s ease;
+      border-left:3px solid var(--primary-400);
+    }
+    .q-transition strong { color:var(--primary-600); }
+
     /* ================================
        LEAD CAPTURE
     ================================ */
@@ -351,9 +389,9 @@
       background:linear-gradient(135deg, var(--primary-100), var(--accent-100));
       border-radius:50%;
       display:flex; align-items:center; justify-content:center;
-      font-size:36px;
       animation:heartbeat 2s ease infinite;
     }
+    .lead-visual svg { width:36px; height:36px; color:var(--primary-500); }
     .lead-screen h2 {
       font-family:var(--ff-display);
       font-size:26px; font-weight:800; line-height:1.2;
@@ -368,11 +406,20 @@
     .lead-desc strong { color:var(--neutral-800); }
 
     .lead-form { width:100%; max-width:380px; display:flex; flex-direction:column; gap:12px; }
+    .input-label {
+      display:block; font-size:12px; font-weight:600; color:var(--neutral-600);
+      margin-bottom:4px; padding-left:4px;
+    }
     .input-wrap { position:relative; }
     .input-wrap .ico {
-      position:absolute; left:16px; top:50%; transform:translateY(-50%);
+      position:absolute; left:16px; bottom:15px;
       width:18px; height:18px; color:var(--neutral-400);
     }
+    .input-error {
+      display:none; font-size:12px; color:var(--red-500); margin-top:4px; padding-left:4px;
+    }
+    .input-error.show { display:block; }
+    .input-wrap.error input { border-color:var(--red-500); }
     .lead-form input {
       width:100%; padding:15px 16px 15px 46px;
       border:2px solid var(--neutral-200);
@@ -420,7 +467,6 @@
       position:absolute; inset:0; width:100%; height:100%; z-index:1;
       animation:spin 2s linear infinite;
     }
-    @keyframes spin { to{transform:rotate(360deg)} }
 
     .loading-title { font-family:var(--ff-display); font-size:22px; font-weight:700; color:var(--neutral-900); }
     .loading-sub { font-size:14px; color:var(--neutral-600); margin-top:-20px; }
@@ -441,6 +487,13 @@
     }
     .load-step.active .load-step-icon { background:var(--primary-100); color:var(--primary-500); }
     .load-step.done .load-step-icon { background:var(--green-50); color:var(--green-600); }
+
+    .btn-skip {
+      background:none; border:none; color:var(--neutral-400);
+      font-size:13px; font-weight:600; cursor:pointer; font-family:var(--ff-body);
+      padding:8px 16px; transition:color .2s;
+    }
+    .btn-skip:hover { color:var(--neutral-600); }
 
     /* ================================
        RESULT
@@ -487,7 +540,8 @@
       padding:16px;
       animation:fadeUp .5s ease .3s both;
     }
-    .alert-banner .ico { font-size:20px; flex-shrink:0; margin-top:1px; }
+    .alert-banner .ico { flex-shrink:0; margin-top:1px; color:var(--amber-500); }
+    .alert-banner .ico svg { width:22px; height:22px; }
     .alert-banner p { font-size:14px; line-height:1.6; color:var(--neutral-700); }
     .alert-banner strong { color:var(--red-600); }
 
@@ -506,7 +560,8 @@
       display:flex; align-items:center; gap:8px;
       color:var(--neutral-900);
     }
-    .dim-card h3 span { font-size:20px; }
+    .dim-card h3 .dim-icon { flex-shrink:0; color:var(--primary-500); }
+    .dim-card h3 .dim-icon svg { width:20px; height:20px; }
 
     .dim-item { margin-bottom:14px; }
     .dim-item:last-child { margin-bottom:0; }
@@ -544,6 +599,8 @@
       color:var(--neutral-900);
       display:flex; align-items:center; gap:8px;
     }
+    .insight-box h3 .insight-icon { flex-shrink:0; color:var(--primary-500); }
+    .insight-box h3 .insight-icon svg { width:20px; height:20px; }
     .insight-text {
       font-size:15px; line-height:1.8; color:var(--neutral-600);
     }
@@ -716,13 +773,57 @@
     @media(prefers-reduced-motion:reduce) {
       *, *::before, *::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
     }
+
+    /* ================================
+       DARK MODE
+    ================================ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --neutral-50: #1C1917;
+        --neutral-100: #292524;
+        --neutral-200: #44403C;
+        --neutral-300: #57534E;
+        --neutral-400: #A8A29E;
+        --neutral-600: #D6D3D1;
+        --neutral-700: #E7E5E4;
+        --neutral-800: #F5F5F4;
+        --neutral-900: #FAFAF9;
+        --surface: #292524;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,.2);
+        --shadow-md: 0 4px 16px rgba(0,0,0,.3);
+        --shadow-lg: 0 12px 40px rgba(0,0,0,.35);
+        --shadow-xl: 0 20px 60px rgba(0,0,0,.4);
+        --shadow-glow: 0 0 40px rgba(233,30,99,.25);
+        --red-50: #3B1414;
+        --green-50: #14261E;
+        --amber-50: #2A1F0A;
+        --blue-50: #141E30;
+        --primary-50: #2D1018;
+        --accent-50: #2A1F0A;
+      }
+      body { color-scheme: dark; }
+      .bg-pattern {
+        background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(233,30,99,.1), transparent),
+          radial-gradient(ellipse 60% 40% at 80% 100%, rgba(255,179,0,.08), transparent),
+          var(--neutral-50);
+      }
+      .progress-wrap { background: rgba(28,25,23,.92); }
+      .lead-form input { color: var(--neutral-800); background: var(--neutral-100); }
+      .lead-form input::placeholder { color: var(--neutral-400); }
+      .q-opt::before { background: linear-gradient(135deg, rgba(233,30,99,.08), rgba(255,179,0,.05)); }
+      .loading-orb::after { background: var(--neutral-50); }
+      .alert-banner { background: var(--red-50); border-color: rgba(239,68,68,.3); }
+      .warning-list li { background: var(--neutral-100); }
+      .welcome-testimonial { background: var(--surface); border-color: var(--neutral-200); }
+      .dim-track { background: var(--neutral-200); }
+    }
   </style>
 </head>
 <body>
 
 <div class="bg-pattern"></div>
 
-<div class="quiz-wrap">
+<div class="quiz-wrap" aria-live="polite">
 
   <!-- Progress -->
   <div class="progress-wrap" id="progressWrap" style="display:none">
@@ -735,7 +836,14 @@
 
   <!-- ======== WELCOME ======== -->
   <div class="screen welcome active" id="scrWelcome">
-    <div class="welcome-visual"><span>🧠</span></div>
+    <div class="welcome-visual">
+      <svg class="welcome-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="28" stroke="var(--primary-500)" stroke-width="2.5" opacity=".3"/>
+        <path d="M32 12c-8 0-14 6-14 14 0 4 2 8 5 10v4c0 2 1.5 3.5 3.5 3.5h11c2 0 3.5-1.5 3.5-3.5v-4c3-2 5-6 5-10 0-8-6-14-14-14z" stroke="var(--primary-500)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M26 44v2c0 2 2.5 4 6 4s6-2 6-4v-2" stroke="var(--primary-500)" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M32 12v-2M44.5 19.5l1.5-1.5M19.5 19.5L18 18M46 32h2M16 32h2" stroke="var(--accent-500)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
 
     <h1>O Raio-X que Nenhum<br>Profissional te Deu Sobre<br>Ser Mãe de Filho com <em>TDAH</em></h1>
 
@@ -772,33 +880,46 @@
 
   <!-- ======== QUESTION ======== -->
   <div class="screen q-screen" id="scrQuestion">
+    <button class="btn-back" id="btnBack" onclick="goBack()" aria-label="Voltar para pergunta anterior" style="display:none">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Voltar
+    </button>
     <div class="q-meta">
       <div id="qCategory" class="q-category"></div>
       <div id="qNumber" class="q-number"></div>
     </div>
-    <div id="qText" class="q-text"></div>
-    <div id="qOptions" class="q-options"></div>
+    <div id="qTransition" class="q-transition" style="display:none" aria-live="polite"></div>
+    <h2 id="qText" class="q-text"></h2>
+    <div id="qOptions" class="q-options" role="radiogroup"></div>
   </div>
 
   <!-- ======== LEAD CAPTURE ======== -->
   <div class="screen lead-screen" id="scrLead">
-    <div class="lead-visual">🔍</div>
-    <h2>Seu Raio-X ficou <em>intenso.</em></h2>
+    <div class="lead-visual">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </div>
+    <h2 id="leadTitle">Seu Raio-X ficou <em>intenso.</em></h2>
     <p class="lead-desc">
       Analisei suas respostas e <strong>preciso te mostrar algo importante</strong>. Preencha abaixo para receber seu diagnóstico completo — com o plano de ação personalizado para a sua realidade.
     </p>
     <div class="lead-form" id="leadForm">
       <div class="input-wrap">
+        <label for="inName" class="input-label">Seu primeiro nome *</label>
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         <input type="text" id="inName" placeholder="Seu primeiro nome" required autocomplete="given-name">
+        <span class="input-error" id="errName"></span>
       </div>
       <div class="input-wrap">
+        <label for="inEmail" class="input-label">Seu melhor email *</label>
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
         <input type="email" id="inEmail" placeholder="Seu melhor email" required autocomplete="email">
+        <span class="input-error" id="errEmail"></span>
       </div>
       <div class="input-wrap">
+        <label for="inPhone" class="input-label">WhatsApp (opcional)</label>
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
         <input type="tel" id="inPhone" placeholder="WhatsApp (opcional)" autocomplete="tel">
+        <span class="input-error" id="errPhone"></span>
       </div>
       <button class="btn-submit" onclick="submitLead()" id="btnSubmit">
         Revelar Meu Raio-X Completo
@@ -823,6 +944,7 @@
       <div class="load-step" id="ls3"><div class="load-step-icon">3</div><span>Analisando a dinâmica familiar</span></div>
       <div class="load-step" id="ls4"><div class="load-step-icon">4</div><span>Gerando seu raio-x personalizado</span></div>
     </div>
+    <button class="btn-skip" id="btnSkip" onclick="skipLoading()" style="display:none">Pular</button>
   </div>
 
   <!-- ======== RESULT ======== -->
@@ -837,17 +959,19 @@
     </div>
 
     <div class="alert-banner" id="alertBanner">
-      <span class="ico">⚠️</span>
+      <span class="ico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </span>
       <p id="alertText"></p>
     </div>
 
     <div class="dim-card">
-      <h3><span>📊</span> Mapa de Intensidade</h3>
+      <h3><span class="dim-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></span> Mapa de Intensidade</h3>
       <div id="dimScores"></div>
     </div>
 
     <div class="insight-box">
-      <h3>🔎 O que Seu Raio-X Revela</h3>
+      <h3><span class="insight-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span> O que Seu Raio-X Revela</h3>
       <div class="insight-text" id="insightText"></div>
       <ul class="warning-list" id="warningList"></ul>
     </div>
@@ -871,7 +995,7 @@
     </div>
 
     <div class="result-footer">
-      <button class="btn-share" onclick="shareResult()">
+      <button class="btn-share" onclick="shareResult()" aria-label="Compartilhar resultado do quiz via WhatsApp ou redes sociais">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
         Enviar para uma mãe que precisa ler isso
       </button>
@@ -888,7 +1012,7 @@
 // ===================================================================
 
 const QUESTIONS = [
-  // === DIMENSAO 1: FILHO ===
+  // === DIMENSAO 1: FILHO (indices 0-3) ===
   {
     id:'filho_rotina', dim:'filho',
     category:'Sobre seu filho', catClass:'filho',
@@ -933,7 +1057,7 @@ const QUESTIONS = [
       {text:'O tratamento está ok, quero aprofundar meu entendimento sobre TDAH.',score:1,tags:['medicacao_ok']}
     ]
   },
-  // === DIMENSAO 2: MAE ===
+  // === DIMENSAO 2: MAE (indices 4-7) ===
   {
     id:'mae_culpa', dim:'mae',
     category:'Sobre você', catClass:'mae',
@@ -978,7 +1102,7 @@ const QUESTIONS = [
       {text:'Tenho boa rede de apoio — família, profissionais, comunidade.',score:1,tags:['solidao_baixa']}
     ]
   },
-  // === DIMENSAO 3: FAMILIA ===
+  // === DIMENSAO 3: FAMILIA (indices 8-11) ===
   {
     id:'familia_parceiro', dim:'familia',
     category:'Sobre sua família', catClass:'familia',
@@ -1003,17 +1127,6 @@ const QUESTIONS = [
     ]
   },
   {
-    id:'familia_rede', dim:'familia',
-    category:'Sobre sua família', catClass:'familia',
-    text:'Quando avós, tios ou amigos falam sobre o comportamento do seu filho, o que você mais ouve?',
-    options:[
-      {text:'"Na minha época não tinha isso." / "É falta de chinelo." — só julgamento.',score:4,tags:['rede_julgamento']},
-      {text:'Não falam nada, mas os olhares dizem tudo. O silêncio dói mais.',score:3,tags:['rede_neutra']},
-      {text:'Alguns apoiam, outros nem tanto. Depende do dia.',score:2,tags:['rede_mista']},
-      {text:'A família toda entende, respeita e apoia o processo.',score:1,tags:['rede_apoio']}
-    ]
-  },
-  {
     id:'familia_financeiro', dim:'familia',
     category:'Sobre sua família', catClass:'familia',
     text:'A realidade financeira do tratamento — terapias, profissionais, materiais — está como?',
@@ -1022,6 +1135,17 @@ const QUESTIONS = [
       {text:'Pago o básico apertando em tudo. Não sobra pra nada, nem pra mim.',score:3,tags:['financeiro_apertado']},
       {text:'Dá pra manter, mas preciso ser muito estratégica com cada real.',score:2,tags:['financeiro_ok']},
       {text:'O financeiro não é minha maior preocupação nesse tema.',score:1,tags:['financeiro_tranquilo']}
+    ]
+  },
+  {
+    id:'familia_rede', dim:'familia',
+    category:'Sobre sua família', catClass:'familia',
+    text:'Quando avós, tios ou amigos falam sobre o comportamento do seu filho, o que você mais ouve?',
+    options:[
+      {text:'"Na minha época não tinha isso." / "É falta de chinelo." — só julgamento.',score:4,tags:['rede_julgamento']},
+      {text:'Não falam nada, mas os olhares dizem tudo. O silêncio dói mais.',score:3,tags:['rede_neutra']},
+      {text:'Alguns apoiam, outros nem tanto. Depende do dia.',score:2,tags:['rede_mista']},
+      {text:'A família toda entende, respeita e apoia o processo.',score:1,tags:['rede_apoio']}
     ]
   }
 ];
@@ -1239,11 +1363,14 @@ const PROFILES = {
 // ===================================================================
 
 let curQ = 0, answers = [];
+let loadingTimeout;
+let pendingName = '', pendingResult = null;
 
 function startQuiz() {
   show('scrQuestion');
   document.getElementById('progressWrap').style.display='block';
   renderQ(0);
+  history.pushState({screen:'question',q:0}, '', '#q1');
   trackEvent('QuizStarted');
 }
 
@@ -1258,6 +1385,26 @@ function renderQ(i) {
   const el = document.getElementById('scrQuestion');
   el.style.animation='none'; el.offsetHeight; el.style.animation='fadeUp .4s ease';
 
+  // Back button visibility
+  const backBtn = document.getElementById('btnBack');
+  if(backBtn) backBtn.style.display = i > 0 ? 'inline-flex' : 'none';
+
+  // Dimension transition
+  const prevDim = i > 0 ? QUESTIONS[i-1].dim : null;
+  const curDim = QUESTIONS[i].dim;
+  const transEl = document.getElementById('qTransition');
+  if(prevDim && prevDim !== curDim) {
+    const msgs = {
+      'mae': 'Agora vamos falar de quem ninguém pergunta: <strong>você</strong>.',
+      'familia': 'Última dimensão: <strong>sua família</strong>. Quase lá.'
+    };
+    if(msgs[curDim]) {
+      transEl.innerHTML = msgs[curDim];
+      transEl.style.display = 'block';
+      setTimeout(() => { transEl.style.display = 'none'; }, 3000);
+    } else { transEl.style.display = 'none'; }
+  } else { transEl.style.display = 'none'; }
+
   document.getElementById('qCategory').className = 'q-category ' + q.catClass;
   document.getElementById('qCategory').textContent = q.category;
   document.getElementById('qNumber').textContent = (i+1) + ' / ' + QUESTIONS.length;
@@ -1265,7 +1412,7 @@ function renderQ(i) {
 
   document.getElementById('qOptions').innerHTML = q.options.map((o,j) => {
     const L = String.fromCharCode(65+j);
-    return `<button class="q-opt" onclick="pickOpt(${i},${j})" style="animation:slideRight .3s ease ${j*0.06}s both">
+    return `<button class="q-opt" onclick="pickOpt(${i},${j})" role="radio" aria-checked="false" style="animation:slideRight .3s ease ${j*0.06}s both">
       <span class="q-opt-letter">${L}</span><span class="q-opt-text">${o.text}</span>
     </button>`;
   }).join('');
@@ -1276,24 +1423,75 @@ function renderQ(i) {
   document.getElementById('progPct').textContent = pct+'%';
 }
 
+function goBack() {
+  if(curQ > 0) {
+    curQ--;
+    renderQ(curQ);
+    history.pushState({screen:'question',q:curQ}, '', '#q'+(curQ+1));
+  } else {
+    show('scrWelcome');
+    document.getElementById('progressWrap').style.display='none';
+    history.pushState({screen:'welcome'}, '', '#');
+  }
+}
+
 function pickOpt(qi, oi) {
   const q = QUESTIONS[qi], o = q.options[oi];
-  document.querySelectorAll('.q-opt').forEach(b=>b.classList.remove('selected'));
-  document.querySelectorAll('.q-opt')[oi].classList.add('selected');
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach(b => { b.classList.remove('selected'); b.setAttribute('aria-checked','false'); });
+  opts[oi].classList.add('selected');
+  opts[oi].setAttribute('aria-checked','true');
   answers[qi] = { questionId:q.id, optionIndex:oi, score:o.score, tags:o.tags };
 
+  // Save progress to localStorage
+  localStorage.setItem('quiz_progress', JSON.stringify({curQ: qi, answers}));
+
   setTimeout(()=>{
-    if(curQ < QUESTIONS.length-1) { curQ++; renderQ(curQ); }
-    else { show('scrLead'); document.getElementById('progressWrap').style.display='none'; trackEvent('LeadFormViewed'); }
+    if(curQ < QUESTIONS.length-1) {
+      curQ++;
+      renderQ(curQ);
+      history.pushState({screen:'question',q:curQ}, '', '#q'+(curQ+1));
+    } else {
+      // Compute dynamic lead title based on severity
+      const totalScore = answers.reduce((sum, a) => sum + (a ? a.score : 0), 0);
+      const leadTitle = document.getElementById('leadTitle');
+      if(totalScore >= 36) leadTitle.innerHTML = 'Seu Raio-X ficou <em>preocupante.</em>';
+      else if(totalScore >= 24) leadTitle.innerHTML = 'Seu Raio-X ficou <em>intenso.</em>';
+      else if(totalScore >= 16) leadTitle.innerHTML = 'Seu Raio-X ficou <em>revelador.</em>';
+      else leadTitle.innerHTML = 'Seu Raio-X está <em>pronto.</em>';
+
+      show('scrLead');
+      document.getElementById('progressWrap').style.display='none';
+      history.pushState({screen:'lead'}, '', '#resultado');
+      trackEvent('LeadFormViewed');
+    }
   }, 350);
 }
 
+// Inline validation
+function validateField(id, errorId, message) {
+  const input = document.getElementById(id);
+  const error = document.getElementById(errorId);
+  const wrap = input.closest('.input-wrap');
+  if(!input.value.trim() || (input.type === 'email' && !input.value.includes('@'))) {
+    error.textContent = message;
+    error.classList.add('show');
+    wrap.classList.add('error');
+    return false;
+  }
+  error.classList.remove('show');
+  wrap.classList.remove('error');
+  return true;
+}
+
 function submitLead() {
+  const validName = validateField('inName', 'errName', 'Por favor, insira seu nome.');
+  const validEmail = validateField('inEmail', 'errEmail', 'Por favor, insira um email válido.');
+  if(!validName || !validEmail) return;
+
   const name = document.getElementById('inName').value.trim();
   const email = document.getElementById('inEmail').value.trim();
   const phone = document.getElementById('inPhone').value.trim();
-  if(!name){document.getElementById('inName').focus();return;}
-  if(!email||!email.includes('@')){document.getElementById('inEmail').focus();return;}
 
   const btn = document.getElementById('btnSubmit');
   btn.disabled=true; btn.textContent='Analisando...';
@@ -1311,31 +1509,54 @@ function calcResult() {
     allTags.push(...a.tags);
   });
 
-  let profile='consciente';
-  for(const[k,p] of Object.entries(PROFILES)) {
-    if(k==='consciente') continue;
-    if(p.test(dims)){profile=k;break;}
-  }
+  // Improved profile selection with dominant dimension
+  const total = dims.filho + dims.mae + dims.familia;
+  const maxDim = Math.max(dims.filho, dims.mae, dims.familia);
+
+  let profile = 'consciente';
+  if(dims.filho >= 12 && dims.mae >= 12) profile = 'guerreira_exausta';
+  else if(dims.familia >= 12 && dims.familia === maxDim) profile = 'lar_em_guerra';
+  else if(dims.filho >= 12 && dims.filho === maxDim) profile = 'filho_vulcao';
+  else if(dims.mae >= 10 && dims.familia >= 10) profile = 'mae_solitaria';
+  else if(dims.filho >= 8 && dims.mae >= 8 && dims.familia < 10) profile = 'perdida_respostas';
+  else if(dims.filho >= 6 && dims.mae >= 6 && dims.familia >= 6) profile = 'equilibrista';
 
   const isMaeSolo = allTags.includes('mae_solo');
+
+  // Improved matchPct formula - real calculation
   const scored = PRODUCTS
     .filter(p => !(isMaeSolo && p.id==='parceiro_participar'))
     .map(p=>{
-      let m=0; p.tags.forEach(t=>{if(allTags.includes(t))m++;});
-      return {...p, matchScore:m*p.weight, matchPct:Math.min(97,Math.round(62+(m/p.tags.length)*35))};
-    }).filter(p=>p.matchScore>0).sort((a,b)=>b.matchScore-a.matchScore).slice(0,3);
+      let m = 0;
+      p.tags.forEach(t => { if(allTags.includes(t)) m++; });
+      const realPct = Math.round((m / p.tags.length) * 100);
+      return {...p, matchScore: m * p.weight, matchPct: realPct};
+    }).filter(p => p.matchScore > 0).sort((a,b) => b.matchScore - a.matchScore).slice(0,3);
 
-  if(scored.length<3){
-    const used=scored.map(p=>p.id);
-    const fill=PRODUCTS.filter(p=>!used.includes(p.id)).sort((a,b)=>b.weight-a.weight);
-    while(scored.length<3&&fill.length){const f=fill.shift();scored.push({...f,matchScore:1,matchPct:58});}
+  // Ensure flagship product and fill to 3
+  if(scored.length < 3) {
+    const used = scored.map(p=>p.id);
+    // Always include flagship product if not already there
+    if(!used.includes('rotina_sem_caos')) {
+      const flagship = PRODUCTS.find(p=>p.id==='rotina_sem_caos');
+      scored.push({...flagship, matchScore:1, matchPct: 45});
+    }
+    // Fill remaining with highest weight products
+    const fill = PRODUCTS.filter(p=>!scored.map(s=>s.id).includes(p.id)).sort((a,b)=>b.weight-a.weight);
+    while(scored.length < 3 && fill.length) { const f = fill.shift(); scored.push({...f, matchScore:1, matchPct: 35}); }
   }
 
   return {dims,profile,products:scored,tags:allTags};
 }
 
 function showLoading(name,result) {
+  pendingName = name;
+  pendingResult = result;
   show('scrLoading');
+  document.getElementById('btnSkip').style.display='none';
+
+  setTimeout(()=>{ document.getElementById('btnSkip').style.display='block'; }, 2000);
+
   const steps=['ls1','ls2','ls3','ls4'];
   steps.forEach((id,i)=>{
     setTimeout(()=>{
@@ -1350,11 +1571,22 @@ function showLoading(name,result) {
     document.getElementById(steps[3]).classList.add('done');
     document.getElementById(steps[3]).querySelector('.load-step-icon').textContent='✓';
   },4200);
-  setTimeout(()=>showResult(name,result),4800);
+  loadingTimeout = setTimeout(()=>showResult(name,result),4800);
+}
+
+function skipLoading() {
+  clearTimeout(loadingTimeout);
+  document.querySelectorAll('.load-step').forEach(s=>{s.classList.add('done');s.querySelector('.load-step-icon').textContent='✓';});
+  showResult(pendingName, pendingResult);
 }
 
 function showResult(name,result) {
+  // Clear saved progress
+  localStorage.removeItem('quiz_progress');
+
   show('scrResult');
+  history.replaceState({screen:'result'}, '', '#resultado');
+
   const prof = PROFILES[result.profile];
 
   document.getElementById('rName').textContent='Seu Raio-X, '+name;
@@ -1374,7 +1606,7 @@ function showResult(name,result) {
     else if(pct>=50){lvl='Alto';cls='high';}
     else if(pct>=25){lvl='Moderado';cls='moderate';}
     else{lvl='Baixo';cls='low';}
-    return `<div class="dim-item"><div class="dim-item-top"><span class="dim-item-label">${d.icon} ${d.label}</span><span class="dim-level ${cls}">${lvl}</span></div><div class="dim-track"><div class="dim-fill ${cls}" style="width:0" data-w="${pct}%"></div></div></div>`;
+    return `<div class="dim-item"><div class="dim-item-top"><span class="dim-item-label"><span aria-hidden="true">${d.icon}</span> ${d.label}</span><span class="dim-level ${cls}">${lvl}</span></div><div class="dim-track"><div class="dim-fill ${cls}" style="width:0" data-w="${pct}%"></div></div></div>`;
   }).join('');
 
   setTimeout(()=>{document.querySelectorAll('.dim-fill').forEach(el=>{el.style.width=el.dataset.w;});},400);
@@ -1382,7 +1614,7 @@ function showResult(name,result) {
   // Insight
   document.getElementById('insightText').innerHTML = prof.insight;
   document.getElementById('warningList').innerHTML = prof.warnings.map(w=>
-    `<li><span class="wi">${w.icon}</span>${w.text}</li>`
+    `<li><span class="wi" aria-hidden="true">${w.icon}</span>${w.text}</li>`
   ).join('');
 
   // Urgency
@@ -1455,6 +1687,54 @@ function shareResult() {
   else{window.open('https://wa.me/?text='+encodeURIComponent(t+' '+u),'_blank');}
   trackEvent('ResultShared');
 }
+
+// ===================================================================
+// NAVIGATION (popstate + localStorage resume)
+// ===================================================================
+
+history.replaceState({screen:'welcome'}, '', '#');
+
+window.addEventListener('popstate', (e) => {
+  if(!e.state) return;
+  if(e.state.screen === 'welcome') {
+    show('scrWelcome');
+    document.getElementById('progressWrap').style.display='none';
+  } else if(e.state.screen === 'question') {
+    curQ = e.state.q;
+    renderQ(curQ);
+    show('scrQuestion');
+    document.getElementById('progressWrap').style.display='block';
+  }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  // Blur validation on inputs
+  const inName = document.getElementById('inName');
+  const inEmail = document.getElementById('inEmail');
+  if(inName) inName.addEventListener('blur', () => { if(inName.value.trim()) validateField('inName','errName','Por favor, insira seu nome.'); });
+  if(inEmail) inEmail.addEventListener('blur', () => { if(inEmail.value.trim()) validateField('inEmail','errEmail','Por favor, insira um email válido.'); });
+
+  // Resume from localStorage
+  const saved = localStorage.getItem('quiz_progress');
+  if(saved) {
+    try {
+      const data = JSON.parse(saved);
+      if(data.curQ > 0 && data.answers && data.answers.length > 0) {
+        if(confirm('Você tem um quiz em andamento (pergunta '+(data.curQ+1)+'/12). Deseja continuar de onde parou?')) {
+          curQ = data.curQ;
+          answers = data.answers;
+          show('scrQuestion');
+          document.getElementById('progressWrap').style.display='block';
+          renderQ(curQ);
+          history.replaceState({screen:'question',q:curQ}, '', '#q'+(curQ+1));
+          return;
+        } else {
+          localStorage.removeItem('quiz_progress');
+        }
+      }
+    } catch(e) { localStorage.removeItem('quiz_progress'); }
+  }
+});
 </script>
 </body>
 </html>
