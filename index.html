@@ -11,10 +11,11 @@
   <meta property="og:image" content="https://quiz.rotinatdahsemcaos.online/og-image.jpg">
   <meta property="og:url" content="https://quiz.rotinatdahsemcaos.online/">
 
-  <!-- Supabase -->
+  <!-- Supabase + CAPI endpoint -->
   <script>
     const SUPABASE_URL = 'https://txgbeuvkyomwqidgljup.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR4Z2JldXZreW9td3FpZGdsanVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNTQwMzksImV4cCI6MjA4ODgzMDAzOX0.h-7H9UdlrYwLz1ivsI-6456L2hvw3ZmYU_zNP3Isbdo';
+    const META_CAPI_ENDPOINT = SUPABASE_URL + '/functions/v1/meta-capi';
   </script>
 
   <!-- Fonts -->
@@ -22,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 
-  <!-- Meta Pixel -->
+  <!-- Meta Pixel + CAPI-ready PageView (dedup via event_id) -->
   <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -30,7 +31,43 @@
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '890243330358243');
-    fbq('track', 'PageView');
+
+    // Persist fbclid as _fbc cookie for CAPI matching (Meta spec)
+    (function(){
+      try {
+        var p=new URLSearchParams(location.search);
+        var fbclid=p.get('fbclid');
+        if(fbclid && !document.cookie.match(/(?:^|; )_fbc=/)) {
+          var ts=Math.floor(Date.now()/1000);
+          var v='fb.1.'+ts+'.'+fbclid;
+          document.cookie='_fbc='+v+'; max-age=7776000; path=/; domain=.'+location.hostname.split('.').slice(-2).join('.');
+        }
+      } catch(e){}
+    })();
+
+    // Generate PageView event_id (shared with CAPI for dedup)
+    window._pageViewId='pv_'+Date.now()+'_'+Math.random().toString(36).slice(2,10);
+    fbq('track','PageView',{},{eventID:window._pageViewId});
+
+    // Forward PageView to CAPI as soon as fbp/fbc cookies exist (next tick)
+    setTimeout(function(){
+      try {
+        var gc=function(n){var m=document.cookie.match('(?:^|; )'+n+'=([^;]*)');return m?decodeURIComponent(m[1]):undefined;};
+        fetch('https://txgbeuvkyomwqidgljup.supabase.co/functions/v1/meta-capi',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({events:[{
+            event_name:'PageView',
+            event_id:window._pageViewId,
+            event_time:Math.floor(Date.now()/1000),
+            event_source_url:location.href,
+            action_source:'website',
+            user_data:{fbp:gc('_fbp'),fbc:gc('_fbc'),client_user_agent:navigator.userAgent}
+          }]}),
+          keepalive:true
+        }).catch(function(){});
+      } catch(e){}
+    }, 1200);
   </script>
   <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=890243330358243&ev=PageView&noscript=1" /></noscript>
@@ -2280,6 +2317,7 @@ function showResult(name,result) {
 
 async function sendLead(data) {
   try {
+    const event_id = 'lead_' + Date.now() + '_' + Math.random().toString(36).slice(2,10);
     const payload = {
       name:data.name, email:data.email, whatsapp:data.phone||null,
       profile:data.result.profile,
@@ -2287,6 +2325,7 @@ async function sendLead(data) {
       answers:data.answers.map(a=>({q:a.questionId,o:a.optionIndex,s:a.score})),
       recommended_products:data.result.products.map(p=>p.id),
       source:'meta_ads',
+      event_id,
       utm_source:new URLSearchParams(location.search).get('utm_source'),
       utm_medium:new URLSearchParams(location.search).get('utm_medium'),
       utm_campaign:new URLSearchParams(location.search).get('utm_campaign')
@@ -2296,23 +2335,83 @@ async function sendLead(data) {
       headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal'},
       body:JSON.stringify(payload)
     });
-    trackEvent('LeadCaptured',{email:data.email});
+    trackEvent('LeadCaptured',{
+      profile:data.result.profile,
+      currency:'BRL',
+      value:1
+    },{
+      event_id,
+      user_data:{
+        email:data.email,
+        phone:data.phone||undefined,
+        first_name:(data.name||'').split(' ')[0],
+        last_name:(data.name||'').split(' ').slice(1).join(' ')||undefined
+      }
+    });
   } catch(e) { console.error('Lead error:',e); }
 }
 
 // ===================================================================
-// TRACKING
+// TRACKING (browser + CAPI with event_id deduplication)
 // ===================================================================
 
-function trackEvent(ev, params={}) {
+function _getCookie(name) {
+  var m = document.cookie.match('(?:^|; )'+name.replace(/([.$?*|{}()[\]\\/+^])/g,'\\$1')+'=([^;]*)');
+  return m ? decodeURIComponent(m[1]) : undefined;
+}
+
+function _capiForward(eventName, eventID, customData, userData) {
+  // Fire-and-forget server-side event
+  try {
+    var body = {
+      events: [{
+        event_name: eventName,
+        event_id: eventID,
+        event_time: Math.floor(Date.now()/1000),
+        event_source_url: location.href,
+        action_source: 'website',
+        user_data: Object.assign({
+          fbp: _getCookie('_fbp'),
+          fbc: _getCookie('_fbc'),
+          client_user_agent: navigator.userAgent
+        }, userData||{}),
+        custom_data: customData||{}
+      }]
+    };
+    fetch(META_CAPI_ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(body),
+      keepalive: true
+    }).catch(function(){});
+  } catch(e){}
+}
+
+function trackEvent(ev, params, opts) {
+  params = params || {};
+  opts = opts || {};
+
   // Add profile to params for remarketing segmentation
   if(window._quizProfile) params.quiz_profile = window._quizProfile;
 
+  // Generate event_id if caller didn't
+  var eventID = opts.event_id || (ev.toLowerCase() + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,10));
+
+  // Map quiz event -> Meta standard event name
+  var metaEvent = null;
+  if(ev==='LeadCaptured') metaEvent='Lead';
+  else if(ev==='ProductClicked') metaEvent='InitiateCheckout';
+  else if(ev==='ResultViewed') metaEvent='ViewContent';
+  else if(ev==='LeadFormViewed') metaEvent='CompleteRegistration';
+
   if(typeof fbq==='function'){
-    if(ev==='LeadCaptured') fbq('track','Lead',params);
-    else if(ev==='ProductClicked') fbq('track','InitiateCheckout',params);
-    else fbq('trackCustom',ev,params);
+    if(metaEvent) fbq('track', metaEvent, params, {eventID: eventID});
+    else fbq('trackCustom', ev, params, {eventID: eventID});
   }
+
+  // Forward to CAPI (browser+server dedup via event_id)
+  if(metaEvent) _capiForward(metaEvent, eventID, params, opts.user_data);
+
   if(typeof gtag==='function') gtag('event',ev,params);
   if(typeof ttq==='object' && ttq.track) {
     if(ev==='LeadCaptured') ttq.track('SubmitForm',params);
@@ -2320,7 +2419,7 @@ function trackEvent(ev, params={}) {
     else if(ev==='ResultViewed') ttq.track('ViewContent',params);
   }
   // Push to dataLayer for GTM
-  if(typeof dataLayer !== 'undefined') dataLayer.push({event:ev, ...params});
+  if(typeof dataLayer !== 'undefined') dataLayer.push({event:ev, event_id:eventID, ...params});
 }
 
 function shareResult() {
