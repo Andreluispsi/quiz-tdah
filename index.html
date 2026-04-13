@@ -821,10 +821,11 @@
       box-shadow:var(--shadow-sm);
     }
     .expert-avatar {
-      width:48px; height:48px; border-radius:50%;
-      background:linear-gradient(135deg,var(--primary-400),var(--primary-600));
-      display:flex; align-items:center; justify-content:center;
-      color:white; font-weight:800; font-size:18px; flex-shrink:0;
+      width:56px; height:56px; border-radius:50%;
+      object-fit:cover; flex-shrink:0;
+      border:2px solid var(--primary-500);
+      box-shadow:0 2px 8px rgba(216,27,96,.25);
+      background:var(--neutral-100);
     }
     .expert-info { text-align:left; }
     .expert-info .name { font-size:14px; font-weight:700; color:var(--neutral-900); }
@@ -980,10 +981,11 @@
       border-bottom:1px solid var(--neutral-200);
     }
     .letter-avatar {
-      width:44px; height:44px; border-radius:50%;
-      background:linear-gradient(135deg,var(--primary-400),var(--primary-600));
-      display:flex; align-items:center; justify-content:center;
-      color:white; font-weight:800; font-size:16px; flex-shrink:0;
+      width:52px; height:52px; border-radius:50%;
+      object-fit:cover; flex-shrink:0;
+      border:2px solid var(--primary-500);
+      box-shadow:0 2px 8px rgba(216,27,96,.25);
+      background:var(--neutral-100);
     }
     .letter-title { display:flex; flex-direction:column; }
     .letter-title strong { font-size:14px; color:var(--neutral-900); font-weight:700; }
@@ -1378,16 +1380,16 @@
     </div>
 
     <div class="expert-stamp">
-      <div class="expert-avatar">AL</div>
+      <img class="expert-avatar" src="andre-perfil.jpg" alt="André Luis, psicólogo CRP 06/161434" loading="lazy">
       <div class="expert-info">
         <div class="name">André Luis, CRP 06/161434</div>
-        <div class="title">Psicólogo Clínico | Especialista em TDAH<br>Diagnosticado com TDAH aos 28 anos</div>
+        <div class="title">Psicólogo Clínico | Especialista em TDAH<br>Diagnosticado com TDAH aos 35 anos</div>
       </div>
     </div>
 
     <div class="letter-card">
       <div class="letter-header">
-        <div class="letter-avatar">AL</div>
+        <img class="letter-avatar" src="andre-perfil.jpg" alt="André Luis" loading="lazy">
         <div class="letter-title">
           <strong>Uma mensagem pessoal pra você</strong>
           <span>De André Luis, psicólogo CRP 06/161434</span>
