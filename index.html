@@ -1115,6 +1115,59 @@
       .welcome-testimonial { background: var(--surface); border-color: var(--neutral-200); }
       .dim-track { background: var(--neutral-200); }
     }
+
+    /* === HORMOZI COPY BLOCKS === */
+    .guarantee-banner {
+      display:flex; gap:16px; align-items:flex-start;
+      background:linear-gradient(135deg, #ECFDF5, #D1FAE5);
+      border:2px solid #10B981; border-radius:16px;
+      padding:20px 22px; margin:24px 0 28px;
+      box-shadow:0 4px 16px rgba(16,185,129,.12);
+    }
+    .guarantee-icon {
+      font-size:36px; line-height:1;
+      flex-shrink:0;
+      animation:heartbeat 2.5s ease-in-out infinite;
+    }
+    .guarantee-text { flex:1; }
+    .guarantee-text strong {
+      display:block; font-size:16px; font-weight:800;
+      color:#065F46; margin-bottom:6px;
+      font-family:var(--ff-display);
+    }
+    .guarantee-text p {
+      font-size:14px; line-height:1.55; color:#047857;
+      margin:0 0 8px;
+    }
+    .guarantee-author {
+      font-size:12px; color:#059669; font-style:italic;
+      font-weight:600;
+    }
+    @media (max-width:480px) {
+      .guarantee-banner { padding:16px 18px; gap:12px; }
+      .guarantee-icon { font-size:28px; }
+      .guarantee-text strong { font-size:15px; }
+      .guarantee-text p { font-size:13px; }
+    }
+
+    .lead-sub {
+      display:block;
+      font-size:15px;
+      font-weight:500;
+      color:var(--neutral-600);
+      margin-top:10px;
+      font-family:var(--ff-body);
+    }
+    @media (prefers-color-scheme: dark) {
+      .guarantee-banner {
+        background:linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06));
+        border-color:rgba(16,185,129,.5);
+      }
+      .guarantee-text strong { color:#6EE7B7; }
+      .guarantee-text p { color:#A7F3D0; }
+      .guarantee-author { color:#6EE7B7; }
+      .lead-sub { color:var(--neutral-400); }
+    }
   </style>
 </head>
 <body>
@@ -1146,10 +1199,10 @@
       </svg>
     </div>
 
-    <h1>O Raio-X que Nenhum<br>Profissional te Deu Sobre<br>Ser Mãe de Filho com <em>TDAH</em></h1>
+    <h1>Descubra em 3 Minutos Onde Sua<br>Rotina Com TDAH Está Travada<br><em>— e o Plano Exato Pra Consertar em 7 Dias</em></h1>
 
     <p class="welcome-subtitle">
-      <strong>12 perguntas honestas</strong> vão mapear as 3 dimensões da sua realidade — seu filho, você mesma e sua família — e revelar <strong>exatamente onde o sistema está travado</strong>.
+      <strong>12 perguntas honestas</strong> vão mapear as 3 dimensões da sua realidade — seu filho, você mesma e sua família — e revelar <strong>exatamente onde o sistema está travado</strong>. Sem gritar. Sem medicar. Sem culpa.
     </p>
 
     <div class="welcome-trust">
@@ -1311,6 +1364,16 @@
         <h3>Seu Plano de Ação Personalizado</h3>
         <p>Na ordem exata que você precisa seguir</p>
       </div>
+
+      <div class="guarantee-banner">
+        <div class="guarantee-icon">🛡️</div>
+        <div class="guarantee-text">
+          <strong>Garantia Mãe Sob Controle — 7 Dias</strong>
+          <p>Aplique qualquer método por 7 dias inteiros. Se você não sentir diferença na forma como você e seu filho lidam com a rotina, devolvemos 100% do valor. Sem perguntas. Sem culpa.</p>
+          <span class="guarantee-author">— André Luis, psicólogo CRP 06/161434</span>
+        </div>
+      </div>
+
       <div id="productCards"></div>
     </div>
 
@@ -1966,10 +2029,11 @@ function pickOpt(qi, oi) {
       // Compute dynamic lead title based on severity
       const totalScore = answers.reduce((sum, a) => sum + (a ? a.score : 0), 0);
       const leadTitle = document.getElementById('leadTitle');
-      if(totalScore >= 36) leadTitle.innerHTML = 'Seu Raio-X ficou <em>preocupante.</em>';
-      else if(totalScore >= 24) leadTitle.innerHTML = 'Seu Raio-X ficou <em>intenso.</em>';
-      else if(totalScore >= 16) leadTitle.innerHTML = 'Seu Raio-X ficou <em>revelador.</em>';
-      else leadTitle.innerHTML = 'Seu Raio-X está <em>pronto.</em>';
+      const sub = '<span class="lead-sub">Mas tem solução — e é mais simples do que parece.</span>';
+      if(totalScore >= 36) leadTitle.innerHTML = 'Seu Raio-X ficou <em>preocupante.</em>'+sub;
+      else if(totalScore >= 24) leadTitle.innerHTML = 'Seu Raio-X ficou <em>intenso.</em>'+sub;
+      else if(totalScore >= 16) leadTitle.innerHTML = 'Seu Raio-X ficou <em>revelador.</em>'+sub;
+      else leadTitle.innerHTML = 'Seu Raio-X está <em>pronto.</em>'+sub;
 
       show('scrLead');
       document.getElementById('progressWrap').style.display='none';
@@ -2291,9 +2355,19 @@ function showResult(name,result) {
   const btnClasses = ['primary','secondary','tertiary'];
   const badgeClasses = ['urgent','recommended','complement'];
   const badgeTexts = ['Mais urgente pra você','Recomendado','Complementar'];
+  const ctaTexts = [
+    'Quero o sistema agora →',
+    'Adicionar ao meu plano →',
+    'Incluir como complemento →'
+  ];
 
   document.getElementById('productCards').innerHTML = result.products.map((p,i)=>{
     const featured = i===0?'featured':'';
+    const anchor = p.priceNum <= 25
+      ? 'vs R$ 350 de 1 sessão com psicóloga TDAH'
+      : p.priceNum <= 50
+      ? 'vs R$ 800/mês de psicopedagoga por 2 anos'
+      : 'vs R$ 2.400/ano só em consultas especializadas';
     return `<div class="product-card ${featured}" style="animation:fadeUp .5s ease ${.2*(i+1)}s both">
       <div class="product-badge-wrap"><span class="product-badge ${badgeClasses[i]}">${badgeTexts[i]}</span></div>
       <div class="product-rank"><span class="rank-num">${i+1}</span><span class="product-tag">${dimLabels[p.dim]||''}</span></div>
@@ -2301,10 +2375,10 @@ function showResult(name,result) {
       <p class="product-desc">${p.desc}</p>
       <div class="product-price">
         <span class="price-value">${p.price}</span>
-        <span class="price-anchor">${p.priceNum <= 25 ? 'Menos que uma pizza' : p.priceNum <= 50 ? 'Menos que um delivery de fim de semana' : 'Menos que uma consulta'}</span>
+        <span class="price-anchor">${anchor}</span>
       </div>
       <div class="product-match"><div class="match-bar-track"><div class="match-bar-fill" style="width:${p.matchPct}%"></div></div><span class="match-pct">${p.matchPct}% match</span></div>
-      <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1},price:${p.priceNum}})">Quero por ${p.price} →</a>
+      <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1},price:${p.priceNum}})">${ctaTexts[i]}</a>
     </div>`;
   }).join('');
 
