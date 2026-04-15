@@ -200,11 +200,70 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
-    .progress-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-    .progress-label { font-size:13px; font-weight:600; color:var(--neutral-600); }
-    .progress-pct { font-size:13px; font-weight:700; color:var(--primary-500); }
-    .progress-track { height:5px; background:var(--neutral-200); border-radius:3px; overflow:hidden; }
-    .progress-bar { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--primary-400),var(--primary-500),var(--accent-500)); background-size:200% 100%; animation:gradientShift 3s ease infinite; transition:width .6s cubic-bezier(.4,0,.2,1); width:0; }
+    .progress-wrap {
+      padding: 18px 22px 16px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--neutral-200);
+      box-shadow: 0 4px 20px rgba(216,27,96,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .progress-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; gap:12px; }
+    .progress-label {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--neutral-800);
+      font-family: var(--ff-display);
+      letter-spacing: -0.3px;
+    }
+    .progress-pct {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--primary-500);
+      font-family: var(--ff-display);
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 8px rgba(216,27,96,0.2);
+    }
+    .progress-track {
+      height: 14px;
+      background: var(--neutral-100);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid var(--neutral-200);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .progress-bar {
+      height: 100%;
+      border-radius: 7px;
+      background: linear-gradient(90deg, var(--primary-400), var(--primary-500), var(--accent-500));
+      background-size: 200% 100%;
+      animation: gradientShift 3s ease infinite;
+      transition: width .6s cubic-bezier(.4,0,.2,1);
+      width: 0;
+      box-shadow: 0 2px 12px rgba(233,30,99,0.35), 0 0 20px rgba(255,179,0,0.15);
+      position: relative;
+    }
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(233,30,99,0.8), 0 2px 6px rgba(0,0,0,0.2);
+    }
+    @media (max-width: 480px) {
+      .progress-wrap { padding: 14px 18px 12px; }
+      .progress-label { font-size: 17px; }
+      .progress-pct { font-size: 22px; }
+      .progress-track { height: 12px; }
+    }
 
     /* === SCREENS === */
     .screen { display:none; flex:1; flex-direction:column; }
@@ -2121,6 +2180,39 @@ function calcResult() {
     // Fill remaining with highest weight products
     const fill = PRODUCTS.filter(p=>!scored.map(s=>s.id).includes(p.id)).sort((a,b)=>b.weight-a.weight);
     while(scored.length < 3 && fill.length) { const f = fill.shift(); scored.push({...f, matchScore:1, matchPct: 35}); }
+  }
+
+  // === Profile-based featured product override ===
+  // Different profiles need different emotional anchors on the first product shown.
+  // Data-driven: 46% of leads are "guerreira_exausta" and they need emotional rescue,
+  // not more routine. Move Kit Emergencial to the top for them.
+  const FEATURED_BY_PROFILE = {
+    guerreira_exausta:  'kit_emergencial',     // needs rescue, not routine
+    mae_solitaria:      'kit_emergencial',     // same emotional bandwidth
+    lar_em_guerra:      'familia_transformacao', // needs family system, not ebook
+    perdida_respostas:  'meu_filho_tdah',      // needs clarity first
+    consciente:         'familia_transformacao', // already calm, next-level
+    equilibrista:       'rotina_sem_caos',     // default
+    // others fall through to default order
+  };
+
+  const forcedFeatured = FEATURED_BY_PROFILE[profile];
+  if (forcedFeatured) {
+    // Ensure the forced product is in the list
+    let featuredIdx = scored.findIndex(p => p.id === forcedFeatured);
+    if (featuredIdx === -1) {
+      // Not in top 3 — inject it, bump it to #0, drop the weakest
+      const forced = PRODUCTS.find(p => p.id === forcedFeatured);
+      if (forced) {
+        scored.unshift({...forced, matchScore: 999, matchPct: 95});
+        if (scored.length > 3) scored.pop();
+      }
+    } else if (featuredIdx !== 0) {
+      // Already in list — promote to #0
+      const [item] = scored.splice(featuredIdx, 1);
+      item.matchPct = Math.max(item.matchPct, 92);
+      scored.unshift(item);
+    }
   }
 
   return {dims,profile,products:scored,tags:allTags};
