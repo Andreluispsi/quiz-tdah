@@ -1221,37 +1221,6 @@
       font-family:var(--ff-body);
     }
 
-    /* Payment expectation strip on product cards */
-    .payment-expect {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      margin:12px 0 14px;
-      background:linear-gradient(135deg, #F0FDF4, #ECFDF5);
-      border:1px solid #BBF7D0;
-      border-radius:10px;
-      font-size:12px;
-      font-weight:600;
-      color:#047857;
-      font-family:var(--ff-body);
-    }
-    .payment-expect span {
-      flex:1;
-      text-align:center;
-      white-space:nowrap;
-    }
-    @media (max-width: 380px) {
-      .payment-expect { font-size:11px; padding:8px 6px; gap:4px; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .payment-expect {
-        background:linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06));
-        border-color:rgba(16,185,129,.35);
-        color:#6EE7B7;
-      }
-    }
     @media (prefers-color-scheme: dark) {
       .guarantee-banner {
         background:linear-gradient(135deg, rgba(16,185,129,.12), rgba(16,185,129,.06));
@@ -2499,11 +2468,6 @@ function showResult(name,result) {
         <span class="price-anchor">${anchor}</span>
       </div>
       <div class="product-match"><div class="match-bar-track"><div class="match-bar-fill" style="width:${p.matchPct}%"></div></div><span class="match-pct">${p.matchPct}% match</span></div>
-      <div class="payment-expect">
-        <span>💳 PIX ou cartão</span>
-        <span>⚡ Acesso imediato</span>
-        <span>🛡️ 7 dias garantia</span>
-      </div>
       <a href="${p.link}" target="_blank" class="btn-product ${btnClasses[i]}" onclick="trackEvent('ProductClicked',{product:'${p.id}',position:${i+1},price:${p.priceNum}})">${ctaTexts[i]}</a>
     </div>`;
   }).join('');
